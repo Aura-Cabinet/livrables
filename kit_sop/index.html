@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kit SOP Complet — Aura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #f9f7f4 0%, #fdfbf7 100%);
+            min-height: 100vh;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1a1614;
+            line-height: 1.65;
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 18rem;
+            font-weight: 300;
+            color: rgba(139, 107, 74, 0.025);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.3em;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            background: #fdfbf7;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+            padding: 80px 100px;
+            min-height: 100vh;
+            border-left: 1px solid rgba(139, 107, 74, 0.15);
+            border-right: 1px solid rgba(139, 107, 74, 0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #8b6b4a;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: #8b6b4a;
+            font-weight: 300;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #2a2420;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #4a3f38;
+            margin-bottom: 15px;
+        }
+        
+        .meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: #8b6b4a;
+            margin: 45px 0;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .first-letter::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.8;
+            margin: 8px 10px 0 0;
+            font-weight: 300;
+            color: #8b6b4a;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: #2a2420;
+        }
+        
+        em {
+            font-style: italic;
+            color: #4a3f38;
+        }
+        
+        .quote {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: #4a3f38;
+            margin: 35px 0;
+            padding-left: 30px;
+            border-left: 3px solid #8b6b4a;
+        }
+        
+        .framework-box {
+            background: rgba(139, 107, 74, 0.05);
+            border: 1px solid rgba(139, 107, 74, 0.2);
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        
+        .framework-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .framework-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .sop-block {
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 3px solid #8b6b4a;
+            background: rgba(139, 107, 74, 0.03);
+        }
+        
+        .sop-name {
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: #2a2420;
+            margin-bottom: 10px;
+        }
+        
+        .sop-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 107, 74, 0.3);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.8;
+            color: #6a5d54;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            font-weight: 300;
+        }
+        
+        ul {
+            margin: 20px 0 20px 30px;
+            list-style: none;
+        }
+        
+        li {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+            text-align: justify;
+        }
+        
+        li:before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #8b6b4a;
+        }
+        
+        /* Template A4 styles */
+        .template-page {
+            background: #fff;
+            border: 2px solid rgba(139, 107, 74, 0.3);
+            padding: 40px;
+            margin: 30px 0;
+            min-height: 600px;
+        }
+        
+        .template-header {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #8b6b4a;
+        }
+        
+        .template-field {
+            margin-bottom: 25px;
+        }
+        
+        .field-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: #2a2420;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        
+        .field-line {
+            border-bottom: 1px solid rgba(139, 107, 74, 0.3);
+            min-height: 30px;
+            padding: 5px 0;
+        }
+        
+        .field-area {
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            min-height: 80px;
+            padding: 10px;
+            background: rgba(139, 107, 74, 0.02);
+        }
+        
+        .steps-area {
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            min-height: 200px;
+            padding: 15px;
+            background: rgba(139, 107, 74, 0.02);
+        }
+        
+        .step-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(139, 107, 74, 0.2);
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #8b6b4a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            color: #8b6b4a;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+            min-height: 25px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">AURA</div>
+    
+    <!-- PAGE 1 : INTRODUCTION + MÉTHODO -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+            <h1>Kit SOP Complet</h1>
+            <div class="subtitle">Transformez votre expertise en systèmes reproductibles</div>
+            <div class="meta">Programme Renaissance — Document de travail</div>
+        </div>
+
+        <div class="section-title">Le problème : Un job déguisé en business</div>
+
+        <p class="first-letter">Sans vous, tout s'arrête. Vos employées ne savent pas quoi faire. Vos clientes ne reçoivent pas le même service. Vos processus existent uniquement dans votre tête. Vous n'avez pas créé une entreprise, vous avez créé un emploi dont vous ne pouvez pas démissionner.</p>
+
+        <p>Les SOP — Standard Operating Procedures — sont la solution. Ce sont des recettes claires qui permettent à votre institut de fonctionner sans dépendre de votre présence. Elles libèrent votre temps, réduisent le chaos, et rendent votre croissance possible.</p>
+
+        <div class="quote">"Une SOP bien conçue transforme votre expertise personnelle en actif d'entreprise transmissible."</div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Comment écrire une SOP efficace</div>
+
+        <p class="first-letter">Une SOP n'est pas un roman. C'est un outil de travail. Elle doit être claire, scannable, et actionnable. Quelqu'un qui ne connaît pas la tâche doit pouvoir l'exécuter correctement en suivant votre SOP.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">La structure universelle (6 éléments obligatoires)</div>
+            <div class="framework-content">
+                <strong>1. QUOI</strong> — Nom clair de la tâche<br>
+                <strong>2. POURQUOI</strong> — Impact si bien fait / mal fait<br>
+                <strong>3. QUI</strong> — Responsable (rôle, pas nom)<br>
+                <strong>4. QUAND</strong> — Timing et fréquence<br>
+                <strong>5. COMMENT</strong> — Étapes précises numérotées<br>
+                <strong>6. RÉSULTAT ATTENDU</strong> — À quoi ressemble le succès
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Les 5 règles d'or de rédaction</div>
+            <div class="framework-content">
+                <strong>1. Écrivez pour un débutant</strong> — Pas de jargon, pas d'implicite<br>
+                <strong>2. Utilisez bullet points et checklists</strong> — Scannable en 30 secondes<br>
+                <strong>3. Ajoutez des visuels si nécessaire</strong> — Photo, Loom pour tâches complexes<br>
+                <strong>4. Soyez précise sur les détails critiques</strong> — "Accueillir chaleureusement" = trop vague. "Sourire, prénom, boisson en 30 sec" = actionnable<br>
+                <strong>5. Testez avec quelqu'un qui ne connaît pas</strong> — Chaque confusion = point à clarifier
+            </div>
+        </div>
+
+        <p>Adaptez le niveau de détail selon l'expérience : une apprentie a besoin de tout, une senior juste de la structure. N'hésitez pas à créer deux versions si nécessaire.</p>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Les 5 SOP fondamentales de votre institut</div>
+
+        <p class="first-letter">Vous n'avez pas besoin de 50 SOP. Vous avez besoin de 5 SOP bien faites qui couvrent l'essentiel. Commencez par ces cinq, dans cet ordre précis.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Séquence d'implémentation</div>
+            <div class="framework-content">
+                <strong>Opérationnelles (Semaines 1-4)</strong><br>
+                1. SOP Client — Libère votre charge mentale quotidienne<br>
+                2. SOP Tâches Quotidiennes — Élimine les rappels constants<br><br>
+                <strong>Stratégiques (Semaines 5-10)</strong><br>
+                3. SOP Vente — Structure votre croissance<br>
+                4. SOP Marketing — Rend votre visibilité prévisible<br>
+                5. SOP Finance — Pilote avec lucidité<br><br>
+                <em>Ne sautez pas d'étapes. Chaque SOP construit sur la précédente.</em>
+            </div>
+        </div>
+
+        <div class="page-number">01 / 05</div>
+    </div>
+
+    <!-- PAGE 2 : LES 5 SOP EXPLIQUÉES -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Les 5 SOP détaillées</div>
+
+        <div class="sop-block">
+            <div class="sop-tag">SOP 01 — Opérationnelle</div>
+            <div class="sop-name">SOP Client : L'expérience comme système</div>
+            <p><strong>Objectif :</strong> Garantir que chaque cliente vit la même expérience 5 étoiles, peu importe qui la prend en charge.</p>
+            <p><strong>Structure en 4 phases :</strong></p>
+            <ul>
+                <li><strong>Avant la prestation</strong> — Prise RDV, confirmation, préparation cabine, consultation initiale</li>
+                <li><strong>Pendant la prestation</strong> — Accueil (30 premières secondes critiques), déroulé soin, gestion imprévus</li>
+                <li><strong>Après la prestation</strong> — Conseils post-soin, vente conseil, encaissement, sortie</li>
+                <li><strong>Fidélisation</strong> — Message remerciement, relance inactives, gestion réclamations</li>
+            </ul>
+            <p><strong>Questions clés à vous poser :</strong></p>
+            <ul>
+                <li>Quelle expérience émotionnelle je veux créer ?</li>
+                <li>Quels sont les 3 moments où l'expérience peut basculer ?</li>
+                <li>Quels petits détails font ma différence (que mon équipe oublie) ?</li>
+                <li>Comment je gère une cliente mécontente ?</li>
+            </ul>
+        </div>
+
+        <div class="sop-block">
+            <div class="sop-tag">SOP 02 — Opérationnelle</div>
+            <div class="sop-name">SOP Tâches Quotidiennes : Le socle invisible</div>
+            <p><strong>Objectif :</strong> Éliminer le besoin de rappeler, superviser, vérifier en permanence. Créer un standard qui tient sans vous.</p>
+            <p><strong>Structure en 3 moments :</strong></p>
+            <ul>
+                <li><strong>Ouverture (15-30 min avant)</strong> — Alarme, lumières, température, planning, stock, caisse, première cabine</li>
+                <li><strong>En journée</strong> — Entre prestations (nettoyage cabine, changement serviettes, réappro), pause déjeuner, gestion stocks</li>
+                <li><strong>Fermeture (30-40 min après)</strong> — Nettoyage complet, extinction appareils, linge, caisse, planning lendemain, alarme</li>
+            </ul>
+            <p><strong>Questions clés à vous poser :</strong></p>
+            <ul>
+                <li>Quelles tâches non faites créent un effet domino ?</li>
+                <li>Qui est responsable de quoi ? Comment c'est documenté ?</li>
+                <li>Quels sont mes critères de "bien fait" (pas implicites, explicites) ?</li>
+                <li>Comment ça tient quand quelqu'un est absent ?</li>
+            </ul>
+        </div>
+
+        <div class="sop-block">
+            <div class="sop-tag">SOP 03 — Stratégique</div>
+            <div class="sop-name">SOP Vente : La croissance sans pression</div>
+            <p><strong>Objectif :</strong> Transformer la vente d'un talent personnel en compétence transmissible. Conseil naturel, pas forcing.</p>
+            <p><strong>Structure en 4 piliers :</strong></p>
+            <ul>
+                <li><strong>Identification</strong> — Quels produits/services pousser ? Architecture d'offres (appel, cœur, premium)</li>
+                <li><strong>Processus</strong> — Écouter (diagnostic) → Éduquer (expertise) → Proposer (sans pression) → Traiter objections → Conclure</li>
+                <li><strong>Moments propices</strong> — Pendant le soin (quand j'applique produit), fin prestation (moment conseil), encaissement</li>
+                <li><strong>Suivi</strong> — Mesurer taux conversion, panier moyen, identifier blocages équipe</li>
+            </ul>
+            <p><strong>Questions clés à vous poser :</strong></p>
+            <ul>
+                <li>Pourquoi mon équipe ne vend pas naturellement ?</li>
+                <li>Quelles objections reviennent ? Comment les traiter avec élégance ?</li>
+                <li>Combien d'argent je laisse sur la table chaque mois ?</li>
+            </ul>
+        </div>
+
+        <div class="page-number">02 / 05</div>
+    </div>
+
+    <!-- PAGE 3 : SUITE SOP + TEMPLATE -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="sop-block">
+            <div class="sop-tag">SOP 04 — Stratégique</div>
+            <div class="sop-name">SOP Marketing : La visibilité comme processus</div>
+            <p><strong>Objectif :</strong> Générer de l'attention et de la fidélité de manière prévisible, sans dépendre de votre inspiration.</p>
+            <p><strong>Structure en 4 composantes :</strong></p>
+            <ul>
+                <li><strong>Canaux</strong> — Où investir temps ? (Instagram, Google, bouche-à-oreille, partenariats). Classez par ROI réel</li>
+                <li><strong>Rythme</strong> — Fréquence publication, types contenu (40% éducatif, 30% avant/après, 20% coulisses, 10% promo), calendrier mensuel</li>
+                <li><strong>Création</strong> — Qui prend photos ? Qui rédige ? Qui publie ? Quand créer (batch vs fil de l'eau) ? Templates réutilisables ?</li>
+                <li><strong>Mesure</strong> — Nouveaux abonnés, engagement, nouveaux clients via marketing. Revue mensuelle : qu'est-ce qu'on garde/arrête ?</li>
+            </ul>
+            <p><strong>Questions clés à vous poser :</strong></p>
+            <ul>
+                <li>Quelle image je veux projeter ? Est-ce cohérent actuellement ?</li>
+                <li>Mon marketing attire les bonnes clientes ou juste du volume ?</li>
+                <li>Si j'arrête 3 mois, combien de nouvelles clientes je perds ?</li>
+            </ul>
+        </div>
+
+        <div class="sop-block">
+            <div class="sop-tag">SOP 05 — Stratégique</div>
+            <div class="sop-name">SOP Finance : Piloter avec lucidité</div>
+            <p><strong>Objectif :</strong> Anticiper les problèmes, prendre des décisions éclairées, savoir où va chaque euro.</p>
+            <p><strong>Structure en 3 niveaux :</strong></p>
+            <ul>
+                <li><strong>Hebdomadaire (15-30 min)</strong> — Encaissements semaine, dépenses, trésorerie dispo, anomalies</li>
+                <li><strong>Mensuel (1-2h)</strong> — CA total, CA par prestation, coût produits, charges fixes/variables, marge brute/nette, taux marge</li>
+                <li><strong>Trimestriel (2-3h)</strong> — CA vs objectif, évolution marge, rentabilité par prestation, projections trimestre suivant, décisions stratégiques</li>
+            </ul>
+            <p><strong>Les 5 chiffres vitaux à suivre :</strong></p>
+            <ul>
+                <li>CA (vs objectif)</li>
+                <li>Marge nette (objectif >25%)</li>
+                <li>Panier moyen (objectif +10% vs baseline)</li>
+                <li>Taux remplissage (objectif >70%)</li>
+                <li>Trésorerie (objectif >2 mois de charges)</li>
+            </ul>
+            <p><strong>Questions clés à vous poser :</strong></p>
+            <ul>
+                <li>Quel est mon seuil de rentabilité mensuel ?</li>
+                <li>Quelle prestation coûte plus qu'elle ne rapporte ?</li>
+                <li>Depuis combien de temps je tourne sans vraiment gagner d'argent ?</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Votre template universel</div>
+
+        <p class="first-letter">Utilisez ce template pour créer n'importe quelle SOP. Imprimez-le, remplissez-le à la main si nécessaire, puis digitalisez. L'important est de commencer.</p>
+
+        <div class="page-number">03 / 05</div>
+    </div>
+
+    <!-- PAGE 4 : TEMPLATE A4 VIERGE -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="template-page">
+            <div class="template-header">Template SOP Universel</div>
+            
+            <div class="template-field">
+                <div class="field-label">Nom de la SOP</div>
+                <div class="field-line"></div>
+            </div>
+            
+            <div class="template-field">
+                <div class="field-label">Catégorie</div>
+                <div class="field-line"></div>
+            </div>
+            
+            <div class="template-field">
+                <div class="field-label">Responsable (rôle)</div>
+                <div class="field-line"></div>
+            </div>
+            
+            <div class="template-field">
+                <div class="field-label">Fréquence / Timing</div>
+                <div class="field-line"></div>
+            </div>
+            
+            <div class="template-field">
+                <div class="field-label">Objectif (Pourquoi cette SOP existe)</div>
+                <div class="field-area"></div>
+            </div>
+            
+            <div class="template-field">
+                <div class="field-label">Outils / Supports nécessaires</div>
+                <div class="field-line"></div>
+            </div>
+            
+            <div class="template-field">
+                <div class="field-label">Étapes détaillées (Comment faire)</div>
+                <div class="steps-area">
+                    <div class="step-line">
+                        <div class="step-number">1</div>
+                        <div class="step-content"></div>
+                    </div>
+                    <div class="step-line">
+                        <div class="step-number">2</div>
+                        <div class="step-content"></div>
+                    </div>
+                    <div class="step-line">
+                        <div class="step-number">3</div>
+                        <div class="step-content"></div>
+                    </div>
+                    <div class="step-line">
+                        <div class="step-number">4</div>
+                        <div class="step-content"></div>
+                    </div>
+                    <div class="step-line">
+                        <div class="step-number">5</div>
+                        <div class="step-content"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="template-field" style="margin-top: 20px;">
+                <div class="field-label">Résultat attendu (À quoi ressemble le succès)</div>
+                <div class="field-area"></div>
+            </div>
+            
+            <div class="template-field" style="margin-top: 20px;">
+                <div class="field-label">Contrôle qualité / Vérification</div>
+                <div class="field-area"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #8b6b4a;">
+                <div>Date création : _______________</div>
+                <div>Dernière mise à jour : _______________</div>
+            </div>
+        </div>
+
+        <div class="page-number">04 / 05</div>
+    </div>
+
+    <!-- PAGE 5 : DÉPLOIEMENT + ACTION -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Déployer vos SOP : Les 5 étapes critiques</div>
+
+        <p class="first-letter">Créer une SOP est facile. La faire adopter par votre équipe est difficile. Voici comment garantir que vos SOP passent de la théorie à l'exécution réelle.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Processus de déploiement</div>
+            <div class="framework-content">
+                <strong>1. Communiquer le POURQUOI</strong> — "Pour faciliter votre vie" résonne mieux que "Parce que je le dis"<br><br>
+                <strong>2. Former avec la SOP</strong> — Session formation : lire ensemble, répondre questions, démonstration live<br><br>
+                <strong>3. Tester en réel</strong> — Observer quelqu'un qui suit la SOP, noter chaque confusion, ajuster immédiatement<br><br>
+                <strong>4. Créer rappels visuels</strong> — Checklist plastifiée dans cabine, post-it sur miroir, tableau dans vestiaire<br><br>
+                <strong>5. Vérifier et ajuster</strong> — Les 3 premières semaines : vérifier quotidiennement. Après 21 jours = habitude
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Gérer les objections (elles vont arriver)</div>
+            <div class="framework-content">
+                <strong>"C'est trop compliqué"</strong> → "Quelle partie ? On va la simplifier ensemble."<br>
+                <strong>"Avant c'était mieux"</strong> → "Avant on faisait X erreurs/semaine. Donne-moi 2 semaines."<br>
+                <strong>"Ça prend trop de temps"</strong> → "Les 3 premiers jours oui. Après c'est automatique."<br>
+                <strong>"Je sais déjà"</strong> → "Super ! Mais pour les nouvelles, c'est indispensable."<br>
+                <strong>"J'oublie"</strong> → "Normal. Je mets des rappels visuels partout pour t'aider."
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Outils et stockage</div>
+
+        <p class="first-letter">Vos SOP doivent être accessibles en 10 secondes maximum. Si c'est compliqué à trouver, elles ne seront pas suivies.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Options recommandées</div>
+            <div class="framework-content">
+                <strong>Google Drive</strong> — Dossier "SOP Institut", sous-dossiers par SOP, lien épinglé dans favoris<br>
+                <strong>Notion</strong> — Base données avec recherche, gratuit pour petit institut<br>
+                <strong>Classeur physique</strong> — Low-tech, toujours accessible, fiches plastifiées<br><br>
+                <em>Recommandation : Combinaison digital + physique (checklist plastifiées dans cabines)</em>
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Technologie pour simplifier</div>
+            <div class="framework-content">
+                <strong>Loom</strong> — Vidéo gratuite pour tâches complexes (ex: "Comment nettoyer appareil X")<br>
+                <strong>ChatGPT</strong> — "Transforme ces notes en SOP claire : [notes]" / "Simplifie pour débutante : [SOP]"<br>
+                <strong>Canva</strong> — Templates checklist visuels et engageants
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Responsabilité et amélioration continue</div>
+
+        <p class="first-letter">Chaque SOP doit avoir un propriétaire responsable de sa mise à jour. Sans ownership, les SOP meurent lentement.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Ownership des SOP</div>
+            <div class="framework-content">
+                <strong>SOP Client</strong> — Gérante / Revue tous les 3 mois<br>
+                <strong>SOP Tâches Quotidiennes</strong> — Responsable équipe / Revue mensuelle<br>
+                <strong>SOP Vente</strong> — Gérante / Revue tous les 6 mois<br>
+                <strong>SOP Marketing</strong> — Gérante / Revue tous les 3 mois<br>
+                <strong>SOP Finance</strong> — Gérante (non délégable) / Revue tous les 6 mois
+            </div>
+        </div>
+
+        <div class="quote">"Une SOP version 1 imparfaite mais utilisée vaut infiniment mieux qu'une SOP parfaite qui reste dans un tiroir."</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Rituel d'amélioration</div>
+            <div class="framework-content">
+                <strong>Chaque semaine</strong> — "Quelle SOP pose problème ?" → Ajuster immédiatement<br>
+                <strong>Chaque mois</strong> — Revue d'une SOP : toujours suivie ? Toujours pertinente ?<br>
+                <strong>Chaque trimestre</strong> — Revue complète, archiver inutiles, créer manquantes<br><br>
+                <strong>Quand créer une nouvelle SOP ?</strong><br>
+                • Vous expliquez la même chose 3 fois à 3 personnes différentes<br>
+                • Une erreur se répète malgré vos rappels<br>
+                • Vous recrutez (faciliter onboarding)<br>
+                • Vous ajoutez une nouvelle prestation/service
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Votre premier pas (à faire cette semaine)</div>
+
+        <p class="first-letter">Vous avez tout ce qu'il faut. Ne tentez pas de tout faire. Choisissez UNE SOP. La plus urgente. Celle qui vous fait le plus mal maintenant.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Checklist création première SOP (1-2h)</div>
+            <div class="framework-content">
+                ☐ Choisir quelle SOP créer (Client ou Tâches Quotidiennes recommandé)<br>
+                ☐ Bloquer 2h dans agenda CETTE SEMAINE (pas "quand j'aurai le temps")<br>
+                ☐ Remplir le template page 4 avec vos processus actuels<br>
+                ☐ Faire tester par une employée qui ne connaît pas bien la tâche<br>
+                ☐ Noter ce qui bloque, ajuster immédiatement<br>
+                ☐ Créer rappel visuel (checklist plastifiée ou post-it)<br>
+                ☐ Former l'équipe (15 min réunion : lire ensemble + démo)<br>
+                ☐ Vérifier quotidiennement première semaine<br>
+                ☐ Ajuster au besoin<br>
+                ☐ Passer à la SOP suivante dans 2-3 semaines
+            </div>
+        </div>
+
+        <div class="quote">"Pas besoin d'être parfait. Une SOP évolue comme un produit. Version 1 suffit pour commencer."</div>
+
+        <p>Dans 10 semaines, vous aurez vos 5 SOP fondamentales. Votre institut fonctionnera sans dépendre de vous. Votre équipe sera autonome. Votre charge mentale aura fondu. Et vous pourrez enfin travailler SUR votre entreprise, pas dedans.</p>
+
+        <p>Mais seulement si vous commencez maintenant.</p>
+
+        <div class="footer">
+            <div class="divider" style="margin: 50px auto; width: 120px;"></div>
+            <div class="footer-text">Programme Renaissance by Aura<br>Transformez votre institut en entreprise qui fonctionne sans vous</div>
+        </div>
+
+        <div class="page-number">05 / 05</div>
+    </div>
+
+</body>
+</html>

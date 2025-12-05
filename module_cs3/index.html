@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Consolidation — Semaine 3 — Aura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #f9f7f4 0%, #fdfbf7 100%);
+            min-height: 100vh;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1a1614;
+            line-height: 1.65;
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 18rem;
+            font-weight: 300;
+            color: rgba(139, 107, 74, 0.025);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.3em;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            background: #fdfbf7;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+            padding: 80px 100px;
+            min-height: 100vh;
+            border-left: 1px solid rgba(139, 107, 74, 0.15);
+            border-right: 1px solid rgba(139, 107, 74, 0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #8b6b4a;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: #8b6b4a;
+            font-weight: 300;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #2a2420;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #4a3f38;
+            margin-bottom: 15px;
+        }
+        
+        .meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: #8b6b4a;
+            margin: 45px 0;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .first-letter::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.8;
+            margin: 8px 10px 0 0;
+            font-weight: 300;
+            color: #8b6b4a;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: #2a2420;
+        }
+        
+        em {
+            font-style: italic;
+            color: #4a3f38;
+        }
+        
+        .framework-box {
+            background: rgba(139, 107, 74, 0.05);
+            border: 1px solid rgba(139, 107, 74, 0.2);
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        
+        .framework-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .framework-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .action-box {
+            background: #2a2420;
+            color: #fdfbf7;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 4px solid #8b6b4a;
+        }
+        
+        .action-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #d4b896;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .action-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fdfbf7;
+            margin-bottom: 15px;
+        }
+        
+        .action-content {
+            font-size: 1.05rem;
+            color: #e8e0d5;
+            line-height: 1.7;
+        }
+        
+        .script-box {
+            background: #fff;
+            border: 2px solid rgba(139, 107, 74, 0.3);
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .script-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .script-text {
+            font-size: 1rem;
+            color: #2a2420;
+            line-height: 1.8;
+            font-family: 'Courier New', monospace;
+            background: rgba(139, 107, 74, 0.05);
+            padding: 15px;
+        }
+        
+        .metric-box {
+            background: rgba(139, 107, 74, 0.08);
+            border-left: 3px solid #8b6b4a;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+        
+        .metric-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .checklist-box {
+            background: #fff;
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .checklist-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: #2a2420;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #8b6b4a;
+            margin-right: 12px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 107, 74, 0.3);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.8;
+            color: #6a5d54;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            font-weight: 300;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        th {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            font-weight: 500;
+            background: rgba(139, 107, 74, 0.05);
+        }
+        
+        .highlight-box {
+            background: #2a2420;
+            color: #fdfbf7;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #8b6b4a;
+        }
+        
+        .highlight-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #d4b896;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+        
+        .highlight-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #e8e0d5;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">AURA</div>
+    
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+            <h1>Module Consolidation Financière<br>Semaine 3 : Optimisation Planning & Tarification</h1>
+            <div class="subtitle">Éliminez les pertes invisibles et augmentez votre marge</div>
+            <div class="meta">Programme Renaissance — Document d'exécution</div>
+        </div>
+
+        <div class="section-title">Objectif de la semaine 3</div>
+
+        <p class="first-letter">Récupérer entre 300€ et 800€ par semaine en éliminant les trous de planning et en ajustant stratégiquement vos tarifs. Sans augmenter vos heures de travail. Sans perdre de clientes. En optimisant simplement ce qui existe déjà.</p>
+
+        <p>La plupart des instituts perdent entre 20% et 35% de chiffre d'affaires potentiel dans les créneaux vides. Une cliente annule à la dernière minute. Un créneau de 14h reste vide toute la semaine. Un samedi après-midi n'est jamais rempli. Ces trous sont de l'argent qui s'évapore silencieusement.</p>
+
+        <p>Parallèlement, vous avez probablement des prestations sous-tarifées. Pas toutes. Mais certaines. Celles qui prennent trop de temps pour ce qu'elles rapportent. Celles qui sont en dessous du marché. Celles qui ont une forte demande mais un prix qui n'a pas évolué depuis 3 ans.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Pourquoi cette approche fonctionne</div>
+            <div class="framework-content">
+                <strong>Optimise l'existant</strong> — Vous ne cherchez pas de nouvelles clientes, vous rentabilisez mieux votre temps<br><br>
+                <strong>Indolore pour les clientes</strong> — Les augmentations sont sélectives et justifiées<br><br>
+                <strong>Impact immédiat sur la marge</strong> — Chaque créneau rempli = marge pure<br><br>
+                <strong>Réduit la frustration</strong> — Moins de "trous" = planning plus satisfaisant à regarder<br><br>
+                <strong>Prépare la suite</strong> — Un planning optimisé = base saine pour systématiser
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Impact typique</div>
+            <strong>Avant Semaine 3 :</strong><br>
+            • Taux de remplissage : 65%<br>
+            • 10 créneaux vides/semaine × 70€ = 700€ perdus<br>
+            • 5 prestations sous-tarifées de 5€ × 15 clientes = 375€ perdus<br>
+            • <strong>Perte hebdomadaire : 1 075€</strong><br><br>
+            
+            <strong>Après Semaine 3 :</strong><br>
+            • Taux de remplissage : 78% (+13 points)<br>
+            • 5 créneaux vides récupérés = +350€<br>
+            • Augmentation prix sélective = +300€<br>
+            • <strong>Gain hebdomadaire : +650€ soit +2 600€/mois</strong>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Les 3 actions de la semaine</div>
+
+        <div class="action-box">
+            <div class="action-number">Action 1</div>
+            <div class="action-title">Installer le système "Créneaux Dernière Minute"</div>
+            <div class="action-content">
+                Chaque créneau vide à moins de 24h est une perte sèche. Vous allez transformer ces trous en opportunités en créant un système automatisé de propositions dernière minute avec réduction flash.
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Comment fonctionne le système</div>
+            <div class="framework-content">
+                <strong>1. Identification</strong> — Chaque matin à 9h, votre équipe identifie les créneaux vides du jour<br><br>
+                
+                <strong>2. Message ciblé</strong> — SMS ou story Instagram "Dernière minute : créneau disponible aujourd'hui 15h"<br><br>
+                
+                <strong>3. Réduction flash</strong> — -20% sur le créneau pour créer l'urgence d'achat<br><br>
+                
+                <strong>4. Premier arrivé</strong> — "Première qui répond réserve le créneau"<br><br>
+                
+                <strong>5. Confirmation immédiate</strong> — Réponse en moins de 10 minutes
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Message Dernière Minute (SMS)</div>
+            <div class="script-text">🌸 DERNIÈRE MINUTE<br>
+Créneau disponible AUJOURD'HUI [heure] :<br>
+[Prestation] à -20%<br><br>
+
+Première qui répond OUI le réserve !<br>
+💕</div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Message Dernière Minute (Instagram Story)</div>
+            <div class="script-text">⚡ DISPO MAINTENANT<br><br>
+
+[heure] aujourd'hui<br>
+[Prestation]<br>
+-20% pour la 1ère qui réserve<br><br>
+
+DM ou 📞 [numéro]</div>
+        </div>
+
+        <div class="page-number">01 / 05</div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Performance attendue système Dernière Minute</div>
+            <strong>Taux de remplissage :</strong> 40% à 60% des créneaux proposés<br>
+            <strong>Impact hebdomadaire :</strong> 3 à 6 créneaux remplis × 56€ (70€ - 20%) = 168€ à 336€<br>
+            <strong>Impact mensuel :</strong> +670€ à +1 340€<br><br>
+            
+            <em>Même avec la réduction de 20%, vous gagnez de l'argent sur un créneau qui serait resté vide (marge 100% sur 0€ = 0€).</em>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">À qui envoyer les messages Dernière Minute</div>
+            <div class="framework-content">
+                <strong>Liste prioritaire :</strong><br>
+                • Clientes fréquentes (venues dans les 30 derniers jours)<br>
+                • Clientes qui habitent proche de l'institut (10-15 min max)<br>
+                • Clientes qui ont déjà répondu positivement aux offres flash<br><br>
+                
+                <strong>Taille de liste :</strong> 30 à 50 clientes maximum<br><br>
+                
+                <strong>Fréquence :</strong> Maximum 2-3 fois par semaine (pas tous les jours, ça use)<br><br>
+                
+                <strong>Timing optimal :</strong> Matin 9h-10h pour créneaux après-midi, ou veille 18h pour créneaux lendemain matin
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <div class="highlight-title">Règle critique</div>
+            <div class="highlight-content">
+                Ne proposez JAMAIS un créneau dernière minute à plus de 50 clientes simultanément. Si 10 personnes répondent "OUI" en même temps, vous créez de la frustration. Mieux vaut envoyer à 30 personnes et avoir 60% de taux de remplissage que d'envoyer à 200 et devoir refuser 9 clientes sur 10.
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-box">
+            <div class="action-number">Action 2</div>
+            <div class="action-title">Augmentation prix sélective (sans perdre de clientes)</div>
+            <div class="action-content">
+                Vous allez identifier 3 à 5 prestations à augmenter stratégiquement. Pas toutes. Juste celles où l'augmentation est justifiée, indolore, et nécessaire pour votre rentabilité.
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Quelles prestations augmenter (et pourquoi)</div>
+            <div class="framework-content">
+                <strong>Type 1 : Prestations chronophages</strong><br>
+                Celles qui prennent trop de temps par rapport à ce qu'elles rapportent. Si un soin dure 90 min et rapporte 80€, le ratio temps/argent est mauvais.<br>
+                <em>Augmentation recommandée : +5€ à +10€</em><br><br>
+                
+                <strong>Type 2 : Prestations sous le marché</strong><br>
+                Vos concurrents vendent la même chose 10-15€ plus cher que vous. Vous laissez de l'argent sur la table.<br>
+                <em>Augmentation recommandée : +7€ à +12€</em><br><br>
+                
+                <strong>Type 3 : Prestations forte demande</strong><br>
+                Celles qui sont toujours réservées rapidement, qui ont une liste d'attente. L'offre est inférieure à la demande.<br>
+                <em>Augmentation recommandée : +5€ à +8€</em><br><br>
+                
+                <strong>Type 4 : Prestations anciennes</strong><br>
+                Celles dont le prix n'a pas bougé depuis 2-3 ans alors que vos coûts ont augmenté (produits, loyer, charges).<br>
+                <em>Augmentation recommandée : +3€ à +7€</em>
+            </div>
+        </div>
+
+        <div class="section-title">Grille d'analyse : Identifier vos prestations à augmenter</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Prestation</th>
+                    <th>Prix actuel</th>
+                    <th>Durée</th>
+                    <th>€/heure</th>
+                    <th>Marché</th>
+                    <th>Décision</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Soin visage classique</td>
+                    <td>65€</td>
+                    <td>60 min</td>
+                    <td>65€/h</td>
+                    <td>70-75€</td>
+                    <td>Augmenter +7€</td>
+                </tr>
+                <tr>
+                    <td>Épilation jambes complètes</td>
+                    <td>35€</td>
+                    <td>45 min</td>
+                    <td>47€/h</td>
+                    <td>35-40€</td>
+                    <td>Augmenter +3€</td>
+                </tr>
+                <tr>
+                    <td>Massage relaxant</td>
+                    <td>70€</td>
+                    <td>60 min</td>
+                    <td>70€/h</td>
+                    <td>75-85€</td>
+                    <td>Augmenter +8€</td>
+                </tr>
+                <tr>
+                    <td>Manucure simple</td>
+                    <td>25€</td>
+                    <td>30 min</td>
+                    <td>50€/h</td>
+                    <td>25-28€</td>
+                    <td>OK (ne pas toucher)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="metric-box">
+            <div class="metric-label">Impact d'une augmentation de 5€ sur 3 prestations</div>
+            Si vous faites 15 de ces prestations par semaine :<br>
+            • 15 prestations × 5€ = <strong>+75€/semaine</strong><br>
+            • Sur un mois = <strong>+300€</strong><br>
+            • Sur un an = <strong>+3 600€</strong><br><br>
+            
+            <em>Et vous n'avez travaillé aucune heure supplémentaire.</em>
+        </div>
+
+        <div class="page-number">02 / 05</div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Comment communiquer l'augmentation (sans perdre de clientes)</div>
+
+        <p class="first-letter">La manière dont vous annoncez l'augmentation détermine si vos clientes l'acceptent ou protestent. Voici exactement ce qu'il faut faire.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Les 3 règles d'or de la communication prix</div>
+            <div class="framework-content">
+                <strong>1. Annoncer avec un délai de prévenance</strong><br>
+                "À partir du 1er [mois prochain], nos tarifs évolueront." Jamais du jour au lendemain.<br><br>
+                
+                <strong>2. Justifier simplement</strong><br>
+                "Hausse des coûts de nos produits premium et de nos charges" ou "Pour maintenir notre qualité de service". Pas besoin de se justifier longuement.<br><br>
+                
+                <strong>3. Rassurer sur la qualité</strong><br>
+                "Nous restons engagées à vous offrir la même excellence que vous connaissez." Focus sur la continuité.
+            </div>
+        </framework-box>
+
+        <div class="script-box">
+            <div class="script-label">Message d'annonce augmentation (affichage institut)</div>
+            <div class="script-text">Chères clientes,<br><br>
+
+À partir du 1er [mois], nos tarifs évolueront légèrement pour nous permettre de continuer à vous offrir des prestations de qualité avec les meilleurs produits.<br><br>
+
+Nous restons à votre écoute et vous remercions pour votre fidélité.<br><br>
+
+L'équipe [Nom institut] 💕</div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Message individuel si cliente demande pourquoi</div>
+            <div class="script-text">"Comme tous les professionnels, nous devons ajuster nos tarifs face à la hausse de nos coûts (produits, énergie, charges). Nous avons fait en sorte que cela reste le plus doux possible. Notre priorité reste de vous offrir le même niveau de qualité que vous connaissez 💕"</div>
+        </div>
+
+        <div class="highlight-box">
+            <div class="highlight-title">Ce qui se passe réellement</div>
+            <div class="highlight-content">
+                Sur 100 clientes :<br>
+                • 85-90 ne diront rien et accepteront sans broncher<br>
+                • 8-12 demanderont pourquoi (réponse ci-dessus suffit)<br>
+                • 1-3 râleront mais continueront à venir<br>
+                • 0-2 partiront (et c'est OK, elles n'étaient pas vos clientes idéales)<br><br>
+                
+                Perdre 2% de clientes pour gagner 15-20% de marge sur les 98% restantes est un excellent trade.
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Template grille d'augmentation personnalisée</div>
+            <strong>Prestation 1 :</strong> ____________________<br>
+            Prix actuel : ____€ → Nouveau prix : ____€ (+____€)<br>
+            Justification : ____________________<br><br>
+            
+            <strong>Prestation 2 :</strong> ____________________<br>
+            Prix actuel : ____€ → Nouveau prix : ____€ (+____€)<br>
+            Justification : ____________________<br><br>
+            
+            <strong>Prestation 3 :</strong> ____________________<br>
+            Prix actuel : ____€ → Nouveau prix : ____€ (+____€)<br>
+            Justification : ____________________<br><br>
+            
+            <strong>Date d'application :</strong> ____/____/____<br>
+            <strong>Date d'annonce :</strong> ____/____/____ (min 2 semaines avant)
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-box">
+            <div class="action-number">Action 3</div>
+            <div class="action-title">Structurer le "Planning Rentable"</div>
+            <div class="action-content">
+                Tous les créneaux ne se valent pas. Certaines heures génèrent plus de chiffre d'affaires, d'autres sont systématiquement vides. Vous allez optimiser votre planning pour maximiser la rentabilité sans augmenter vos heures.
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Les 3 types de créneaux rentables</div>
+            <div class="framework-content">
+                <strong>Type 1 : Créneaux Premium (forte demande)</strong><br>
+                • Samedi matin<br>
+                • Mercredi après-midi<br>
+                • Soirées (18h-20h)<br>
+                <em>Stratégie : Réserver pour prestations longues et/ou rentables</em><br><br>
+                
+                <strong>Type 2 : Créneaux Standards (demande moyenne)</strong><br>
+                • Mardi/jeudi matin<br>
+                • Lundi/vendredi après-midi<br>
+                <em>Stratégie : Mix de prestations courtes et moyennes</em><br><br>
+                
+                <strong>Type 3 : Créneaux Difficiles (faible demande)</strong><br>
+                • Lundi matin<br>
+                • Vendredi après 16h<br>
+                • Mardi/jeudi fin d'après-midi<br>
+                <em>Stratégie : Prestations rapides + système dernière minute</em>
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Principe du Planning Rentable</div>
+            <div class="framework-content">
+                <strong>Règle 1 : Prestations longues sur créneaux premium</strong><br>
+                Ne mettez pas un massage 90 min le lundi 10h. Mettez-le le samedi 10h.<br><br>
+                
+                <strong>Règle 2 : Prestations courtes sur créneaux difficiles</strong><br>
+                Épilations, manucures, soins express = parfaits pour remplir les trous<br><br>
+                
+                <strong>Règle 3 : Bloquer des plages "flexibles"</strong><br>
+                2-3 créneaux par semaine sans prestation prédéfinie = peuvent absorber les dernière minute<br><br>
+                
+                <strong>Règle 4 : Limiter les prestations peu rentables</strong><br>
+                Si une prestation rapporte <50€/h, limitez sa disponibilité aux créneaux difficiles uniquement
+            </div>
+        </div>
+
+        <div class="page-number">03 / 05</div>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Template Planning Rentable Hebdomadaire</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Jour</th>
+                    <th>Créneau</th>
+                    <th>Type</th>
+                    <th>Prestations recommandées</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3"><strong>Lundi</strong></td>
+                    <td>9h-12h</td>
+                    <td>Difficile</td>
+                    <td>Épilations, manucures, soins express</td>
+                </tr>
+                <tr>
+                    <td>14h-17h</td>
+                    <td>Standard</td>
+                    <td>Soins visage, massages moyens</td>
+                </tr>
+                <tr>
+                    <td>17h-19h</td>
+                    <td>Premium</td>
+                    <td>Prestations longues rentables</td>
+                </tr>
+                <tr>
+                    <td rowspan="2"><strong>Mardi</strong></td>
+                    <td>9h-13h</td>
+                    <td>Standard</td>
+                    <td>Mix prestations courtes/moyennes</td>
+                </tr>
+                <tr>
+                    <td>14h-19h</td>
+                    <td>Standard</td>
+                    <td>Toutes prestations</td>
+                </tr>
+                <tr>
+                    <td rowspan="2"><strong>Mercredi</strong></td>
+                    <td>9h-12h</td>
+                    <td>Premium</td>
+                    <td>Soins premium, forfaits</td>
+                </tr>
+                <tr>
+                    <td>14h-19h</td>
+                    <td>Premium</td>
+                    <td>Prestations longues haute marge</td>
+                </tr>
+                <tr>
+                    <td rowspan="2"><strong>Jeudi</strong></td>
+                    <td>9h-13h</td>
+                    <td>Standard</td>
+                    <td>Mix</td>
+                </tr>
+                <tr>
+                    <td>14h-19h</td>
+                    <td>Standard</td>
+                    <td>Toutes prestations</td>
+                </tr>
+                <tr>
+                    <td rowspan="2"><strong>Vendredi</strong></td>
+                    <td>9h-15h</td>
+                    <td>Standard</td>
+                    <td>Toutes prestations</td>
+                </tr>
+                <tr>
+                    <td>15h-19h</td>
+                    <td>Difficile</td>
+                    <td>Prestations courtes + dernière minute</td>
+                </tr>
+                <tr>
+                    <td><strong>Samedi</strong></td>
+                    <td>9h-17h</td>
+                    <td>Premium</td>
+                    <td>Prestations premium uniquement</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="metric-box">
+            <div class="metric-label">Impact d'un planning structuré</div>
+            <strong>Avant (planning aléatoire) :</strong><br>
+            • Taux remplissage samedi : 85%<br>
+            • Taux remplissage lundi matin : 45%<br>
+            • Prestations longues perdues sur créneaux faibles<br>
+            • Créneaux premium sous-utilisés<br><br>
+            
+            <strong>Après (planning rentable) :</strong><br>
+            • Taux remplissage samedi : 95% (prestations premium)<br>
+            • Taux remplissage lundi matin : 60% (prestations courtes)<br>
+            • Revenus hebdomadaires : +12% à +18%<br>
+            • Frustration équipe : -40% (moins de trous visibles)
+        </metric-box>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Suivi et mesure Semaine 3</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Tableau de suivi Optimisation Planning</div>
+            <div class="framework-content">
+                <strong>Créneaux Dernière Minute :</strong><br>
+                • Nombre de créneaux vides identifiés : ____<br>
+                • Nombre de messages envoyés : ____<br>
+                • Nombre de créneaux remplis : ____<br>
+                • Taux de remplissage : ____%<br>
+                • CA généré : ____€<br><br>
+                
+                <strong>Augmentation Prix :</strong><br>
+                • Nombre de prestations augmentées : ____<br>
+                • Augmentation moyenne : ____€<br>
+                • Nombre de prestations vendues (prix nouveau) : ____<br>
+                • CA additionnel : ____€<br>
+                • Nombre de clientes perdues : ____ (objectif <2%)<br><br>
+                
+                <strong>Planning Rentable :</strong><br>
+                • Taux remplissage avant : ____%<br>
+                • Taux remplissage après : ____%<br>
+                • Amélioration : ____points<br><br>
+                
+                <strong>Impact global Semaine 3 :</strong><br>
+                • CA additionnel total : ____€<br>
+                • Comparaison vs semaine type avant module : +____%
+            </div>
+        </div>
+
+        <div class="page-number">04 / 05</div>
+    </div>
+
+    <!-- PAGE 5 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Checklist d'exécution Semaine 3</div>
+
+        <div class="checklist-box">
+            <div class="checklist-title">À faire cette semaine (dans l'ordre)</div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Analyser votre planning semaine dernière (identifier trous récurrents)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Créer liste "Dernière Minute" (30-50 clientes proches + fréquentes)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Analyser vos prestations (grille prix actuel vs marché vs durée)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Décider quelles prestations augmenter (3-5 max) + nouveaux prix</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Préparer message d'annonce augmentation</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 3 :</strong> Afficher message augmentation en institut (2 semaines de prévenance min)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 3 :</strong> Lancer premier test "Créneau Dernière Minute" (matin 9h)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 4-7 :</strong> Utiliser système Dernière Minute 2-3x dans la semaine</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 5 :</strong> Restructurer planning semaine prochaine (créneaux premium vs difficiles)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Mesurer taux remplissage avant/après</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Remplir tableau de suivi complet Semaine 3</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Calculer impact cumulé Module Consolidation (3 semaines)</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Résultats attendus</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Objectifs Semaine 3</div>
+            <div class="framework-content">
+                <strong>Scénario conservateur :</strong><br>
+                • Créneaux dernière minute remplis : 3 × 56€ = 168€<br>
+                • Augmentation prix sur 3 prestations : 10 prestations × 5€ = 50€<br>
+                • <strong>CA additionnel semaine : 218€</strong><br>
+                • <strong>Impact mensuel : ~870€</strong><br><br>
+                
+                <strong>Scénario réaliste :</strong><br>
+                • Créneaux dernière minute remplis : 5 × 56€ = 280€<br>
+                • Augmentation prix sur 4 prestations : 18 prestations × 6€ = 108€<br>
+                • Planning optimisé : +10% taux remplissage = 200€<br>
+                • <strong>CA additionnel semaine : 588€</strong><br>
+                • <strong>Impact mensuel : ~2 350€</strong><br><br>
+                
+                <strong>Scénario optimiste :</strong><br>
+                • Créneaux dernière minute remplis : 7 × 56€ = 392€<br>
+                • Augmentation prix sur 5 prestations : 25 prestations × 7€ = 175€<br>
+                • Planning optimisé : +15% taux remplissage = 350€<br>
+                • <strong>CA additionnel semaine : 917€</strong><br>
+                • <strong>Impact mensuel : ~3 670€</strong>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <div class="highlight-title">Impact cumulé Module Consolidation (3 semaines)</div>
+            <div class="highlight-content">
+                <strong>Semaine 1 — Réactivation Clientèle :</strong> +700€ à +1 500€<br>
+                <strong>Semaine 2 — Augmentation Panier :</strong> +800€ à +2 800€<br>
+                <strong>Semaine 3 — Optimisation Planning :</strong> +600€ à +2 350€<br><br>
+                
+                <strong>TOTAL MODULE (impact hebdomadaire récurrent) :</strong><br>
+                <strong>+2 100€ à +6 650€ par semaine</strong><br><br>
+                
+                <strong>Impact mensuel :</strong> +8 400€ à +26 600€<br>
+                <strong>Impact annuel :</strong> +100 800€ à +319 200€<br><br>
+                
+                Et cela, AVANT même de commencer la systématisation, la délégation structurée, et la libération de temps du Programme Renaissance complet.
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Transition vers le Programme Renaissance</div>
+
+        <p class="first-letter">Vous avez maintenant généré du cash significatif en trois semaines. Ce cash vous donne la marge de manœuvre financière et psychologique pour attaquer la transformation structurelle de votre institut.</p>
+
+        <p>Vous avez prouvé que le programme fonctionne. Vous avez vu des résultats concrets et rapides. Vous avez l'adhésion mentale nécessaire pour la suite — qui est plus longue, plus profonde, mais infiniment plus puissante.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Prochaines étapes du Programme Renaissance</div>
+            <div class="framework-content">
+                <strong>Phase 1 : Time Study</strong> — Diagnostic précis de où part votre temps<br>
+                <strong>Phase 2 : Systémisation</strong> — Création de vos 5 SOP fondamentales<br>
+                <strong>Phase 3 : Leadership</strong> — Délégation par niveaux d'autonomie<br>
+                <strong>Phase 4 : Bloc Stratégique</strong> — Reprendre le contrôle de votre agenda<br>
+                <strong>Phase 5 : Renaissance</strong> — Institut autonome qui tourne sans vous<br><br>
+                
+                Durée totale : 12 semaines<br>
+                Objectif : Réduire vos heures de 60h/semaine à 30h/semaine tout en augmentant votre marge
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="divider" style="margin: 50px auto; width: 120px;"></div>
+            <div class="footer-text">Module Consolidation Financière — Programme Renaissance by Aura<br>Vous avez généré le cash. Maintenant, libérez votre temps.</div>
+        </div>
+
+        <div class="page-number">05 / 05</div>
+    </div>
+
+</body>
+</html>

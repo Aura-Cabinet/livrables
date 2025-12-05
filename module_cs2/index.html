@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Consolidation — Semaine 2 — Aura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #f9f7f4 0%, #fdfbf7 100%);
+            min-height: 100vh;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1a1614;
+            line-height: 1.65;
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 18rem;
+            font-weight: 300;
+            color: rgba(139, 107, 74, 0.025);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.3em;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            background: #fdfbf7;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+            padding: 80px 100px;
+            min-height: 100vh;
+            border-left: 1px solid rgba(139, 107, 74, 0.15);
+            border-right: 1px solid rgba(139, 107, 74, 0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #8b6b4a;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: #8b6b4a;
+            font-weight: 300;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #2a2420;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #4a3f38;
+            margin-bottom: 15px;
+        }
+        
+        .meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: #8b6b4a;
+            margin: 45px 0;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .first-letter::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.8;
+            margin: 8px 10px 0 0;
+            font-weight: 300;
+            color: #8b6b4a;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: #2a2420;
+        }
+        
+        em {
+            font-style: italic;
+            color: #4a3f38;
+        }
+        
+        .framework-box {
+            background: rgba(139, 107, 74, 0.05);
+            border: 1px solid rgba(139, 107, 74, 0.2);
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        
+        .framework-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .framework-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .action-box {
+            background: #2a2420;
+            color: #fdfbf7;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 4px solid #8b6b4a;
+        }
+        
+        .action-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #d4b896;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .action-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fdfbf7;
+            margin-bottom: 15px;
+        }
+        
+        .action-content {
+            font-size: 1.05rem;
+            color: #e8e0d5;
+            line-height: 1.7;
+        }
+        
+        .script-box {
+            background: #fff;
+            border: 2px solid rgba(139, 107, 74, 0.3);
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .script-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .script-text {
+            font-size: 1rem;
+            color: #2a2420;
+            line-height: 1.8;
+            font-family: 'Courier New', monospace;
+            background: rgba(139, 107, 74, 0.05);
+            padding: 15px;
+        }
+        
+        .metric-box {
+            background: rgba(139, 107, 74, 0.08);
+            border-left: 3px solid #8b6b4a;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+        
+        .metric-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .upgrade-card {
+            background: #fff;
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .upgrade-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2a2420;
+            margin-bottom: 10px;
+        }
+        
+        .upgrade-price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: #8b6b4a;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .upgrade-details {
+            font-size: 1rem;
+            color: #4a3f38;
+            line-height: 1.7;
+        }
+        
+        .checklist-box {
+            background: #fff;
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .checklist-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: #2a2420;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #8b6b4a;
+            margin-right: 12px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 107, 74, 0.3);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.8;
+            color: #6a5d54;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            font-weight: 300;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        th {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            font-weight: 500;
+            background: rgba(139, 107, 74, 0.05);
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">AURA</div>
+    
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+            <h1>Module Consolidation Financière<br>Semaine 2 : Augmentation Panier Moyen</h1>
+            <div class="subtitle">Générez +10% à +25% par cliente sans surcharge de travail</div>
+            <div class="meta">Programme Renaissance — Document d'exécution</div>
+        </div>
+
+        <div class="section-title">Objectif de la semaine 2</div>
+
+        <p class="first-letter">Augmenter le panier moyen de chaque cliente de 10€ à 20€ sans ajouter une minute de travail supplémentaire. Cette semaine ne se concentre pas sur amener plus de clientes, mais sur faire générer plus de chiffre d'affaires à chaque cliente qui vient déjà.</p>
+
+        <p>Si votre panier moyen actuel est de 65€ et que vous recevez 60 clientes par semaine, un panier moyen porté à 80€ représente 900€ de chiffre d'affaires additionnel par semaine. Sur un mois, cela fait 3 600€ supplémentaires. Sans recruter. Sans faire plus d'heures. Sans nouvelle prestation complexe.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Pourquoi cette approche fonctionne</div>
+            <div class="framework-content">
+                <strong>Pas de nouveau trafic nécessaire</strong> — Vous optimisez les rendez-vous déjà programmés<br><br>
+                <strong>Marge supérieure</strong> — Les upgrades et compléments ont des marges de 60-80%<br><br>
+                <strong>Pas de formation complexe</strong> — Votre équipe apprend une seule phrase à dire<br><br>
+                <strong>Valeur perçue élevée</strong> — Les clientes voient ça comme une attention, pas comme de la vente<br><br>
+                <strong>Résultats immédiats</strong> — Impact visible dès le premier jour d'application
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Impact typique</div>
+            <strong>Avant Semaine 2 :</strong><br>
+            • Panier moyen : 65€<br>
+            • 60 clientes/semaine<br>
+            • CA hebdomadaire : 3 900€<br><br>
+            
+            <strong>Après Semaine 2 :</strong><br>
+            • Panier moyen : 80€ (+23%)<br>
+            • 60 clientes/semaine (même volume)<br>
+            • CA hebdomadaire : 4 800€<br>
+            • <strong>Gain : +900€/semaine soit +3 600€/mois</strong>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Les 3 actions de la semaine</div>
+
+        <div class="action-box">
+            <div class="action-number">Action 1</div>
+            <div class="action-title">Installer le "One-Line Upsell Script"</div>
+            <div class="action-content">
+                Votre équipe va apprendre une seule phrase à dire à chaque cliente pendant le soin. Une seule. Simple, naturelle, non-agressive. Cette phrase transforme vos esthéticiennes en génératrices de chiffre d'affaires sans qu'elles deviennent des commerciales.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Le script universel (à dire pendant le soin)</div>
+            <div class="script-text">"Pour optimiser votre résultat aujourd'hui, je vous recommande [produit/upgrade]. Vous préférez la version classique ou la version premium ?"</div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Pourquoi ce script fonctionne</div>
+            <div class="framework-content">
+                <strong>1. Contexte d'expertise</strong> — "Pour optimiser votre résultat" = vous donnez un conseil professionnel, pas une vente<br><br>
+                
+                <strong>2. Assumé</strong> — Vous ne demandez pas "Voulez-vous ?" mais "Vous préférez classique ou premium ?"<br><br>
+                
+                <strong>3. Choix binaire</strong> — La cliente choisit entre deux options, pas entre "oui" ou "non"<br><br>
+                
+                <strong>4. Naturel</strong> — Ça s'intègre dans la conversation du soin, ce n'est pas un pitch à la fin<br><br>
+                
+                <strong>5. Non-intrusif</strong> — Si la cliente dit "classique", aucun problème. Si elle dit "premium", panier augmenté.
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Taux d'acceptation moyen</div>
+            Sur 10 clientes à qui vous proposez :<br>
+            • 4-6 clientes choisiront "premium" (40-60%)<br>
+            • 3-5 clientes choisiront "classique" (30-50%)<br>
+            • 1-2 clientes refuseront les deux (10-20%)<br><br>
+            
+            <strong>Résultat :</strong> 40% à 60% de vos clientes acceptent un upgrade sans pression.
+        </div>
+
+        <div class="page-number">01 / 05</div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Formation de l'équipe (15 minutes maximum)</div>
+
+        <p class="first-letter">Vous allez former votre équipe en une seule session de 15 minutes. Pas besoin de longue réunion. Voici exactement ce que vous devez leur dire.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Script de formation pour votre équipe</div>
+            <div class="framework-content">
+                "Les filles, à partir d'aujourd'hui, on ajoute une seule chose à notre protocole. Pendant le soin, au moment où vous appliquez [produit/massage/étape clé], vous allez dire cette phrase :<br><br>
+                
+                <em>"Pour optimiser votre résultat aujourd'hui, je vous recommande [upgrade]. Vous préférez la version classique ou la version premium ?"</em><br><br>
+                
+                C'est tout. Vous ne forcez rien. Si elle dit classique, parfait. Si elle dit premium, parfait aussi. Si elle dit non merci, aucun souci, vous continuez le soin normalement.<br><br>
+                
+                L'objectif n'est pas de vendre à tout prix, c'est de proposer systématiquement. Beaucoup de clientes VEULENT le premium mais ne savent pas qu'il existe. On leur rend service en proposant.<br><br>
+                
+                Questions ?"
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Gestion des objections de l'équipe</div>
+            <strong>Si elles disent "Ça fait trop commercial" :</strong><br>
+            → "Ce n'est pas commercial, c'est du conseil. Tu proposes ce qui est mieux pour le résultat de la cliente."<br><br>
+            
+            <strong>Si elles disent "J'ai peur qu'elles refusent" :</strong><br>
+            → "Si elle refuse, aucun problème. Tu continues normalement. Mais si 4 clientes sur 10 acceptent, tu génères 200€ de plus par jour."<br><br>
+            
+            <strong>Si elles disent "Je ne sais pas quoi proposer" :</strong><br>
+            → "Je vais vous donner une liste de 3 upgrades standards. Vous choisissez celui qui correspond au soin."
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-box">
+            <div class="action-number">Action 2</div>
+            <div class="action-title">Créer vos 3 Upgrades Premium Express</div>
+            <div class="action-content">
+                Vous allez définir 3 upgrades simples, rapides à exécuter, et à forte marge. Ces upgrades doivent prendre maximum 5-10 minutes supplémentaires mais ajouter 10€ à 20€ au panier.
+            </div>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-name">Upgrade 1 : Booster Hydratation Visage</div>
+            <div class="upgrade-price">+15€</div>
+            <div class="upgrade-details">
+                <strong>Ce que c'est :</strong> Application d'un sérum premium + masque hydratation intense + 5 min de massage facial supplémentaire<br><br>
+                
+                <strong>Timing :</strong> +8 minutes au soin<br>
+                <strong>Coût produit :</strong> ~3€<br>
+                <strong>Marge :</strong> 12€ (80%)<br><br>
+                
+                <strong>Quand le proposer :</strong> Pendant tout soin visage standard<br><br>
+                
+                <strong>Script :</strong> "Pour optimiser votre hydratation aujourd'hui, je vous recommande notre booster premium. Vous préférez le soin classique ou avec le booster ?"
+            </div>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-name">Upgrade 2 : Massage Huile Premium</div>
+            <div class="upgrade-price">+12€</div>
+            <div class="upgrade-details">
+                <strong>Ce que c'est :</strong> Remplacement de l'huile standard par une huile haut de gamme (argan, rose, or) + 5 min de massage supplémentaire<br><br>
+                
+                <strong>Timing :</strong> +5 minutes au massage<br>
+                <strong>Coût produit :</strong> ~2€<br>
+                <strong>Marge :</strong> 10€ (83%)<br><br>
+                
+                <strong>Quand le proposer :</strong> Pendant tout massage corps<br><br>
+                
+                <strong>Script :</strong> "Pour un résultat optimal aujourd'hui, je vous recommande notre huile premium. Vous préférez l'huile classique ou l'huile premium ?"
+            </div>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-name">Upgrade 3 : Gommage Express Corps</div>
+            <div class="upgrade-price">+18€</div>
+            <div class="upgrade-details">
+                <strong>Ce que c'est :</strong> Gommage corps rapide avant le soin (dos, jambes ou bras selon prestation) pour préparer la peau<br><br>
+                
+                <strong>Timing :</strong> +10 minutes au soin<br>
+                <strong>Coût produit :</strong> ~4€<br>
+                <strong>Marge :</strong> 14€ (78%)<br><br>
+                
+                <strong>Quand le proposer :</strong> Avant tout soin corps (massage, enveloppement, minceur)<br><br>
+                
+                <strong>Script :</strong> "Pour que votre soin pénètre mieux aujourd'hui, je vous recommande un gommage express avant. Vous préférez avec ou sans gommage ?"
+            </div>
+        </div>
+
+        <div class="page-number">02 / 05</div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Personnalisation : Créez vos propres upgrades</div>
+
+        <p class="first-letter">Les trois upgrades ci-dessus sont des standards qui fonctionnent dans 90% des instituts. Mais vous pouvez (et devez) les adapter à votre réalité. Utilisez cette structure pour créer les vôtres.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Template création upgrade personnalisé</div>
+            <div class="framework-content">
+                <strong>Nom de l'upgrade :</strong> ____________________<br><br>
+                
+                <strong>Prix :</strong> ____€ (entre 10€ et 25€)<br><br>
+                
+                <strong>Ce que c'est :</strong> Description en 1-2 lignes<br>
+                ____________________<br><br>
+                
+                <strong>Timing ajouté :</strong> ____ minutes (max 10 min)<br><br>
+                
+                <strong>Coût produit :</strong> ____€<br><br>
+                
+                <strong>Marge nette :</strong> ____€<br><br>
+                
+                <strong>Quand le proposer :</strong> Quel type de soin ?<br>
+                ____________________<br><br>
+                
+                <strong>Script One-Line :</strong><br>
+                "Pour optimiser ____________________ aujourd'hui, je vous recommande ____________________. Vous préférez ____________________ ou ____________________ ?"
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Critères d'un bon upgrade</div>
+            ✓ Rapide à exécuter (5-10 min max)<br>
+            ✓ Forte marge (>70%)<br>
+            ✓ Améliore réellement le résultat (pas du bullshit)<br>
+            ✓ Facile à expliquer en une phrase<br>
+            ✓ Ne nécessite pas de compétence avancée
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-box">
+            <div class="action-number">Action 3</div>
+            <div class="action-title">Créer un Pack Flash Valeur Perçue</div>
+            <div class="action-content">
+                Un Pack Flash est une offre groupée temporaire (14 jours maximum) qui combine plusieurs prestations à tarif réduit. L'objectif : générer des entrées de cash prépayées immédiatement.
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Pourquoi les Packs Flash fonctionnent</div>
+            <div class="framework-content">
+                <strong>Urgence créée</strong> — "Valable 14 jours seulement" pousse à l'achat immédiat<br><br>
+                
+                <strong>Valeur perçue élevée</strong> — La cliente voit l'économie totale, pas le montant total<br><br>
+                
+                <strong>Cash immédiat</strong> — Elle paie maintenant, consomme sur 2-3 mois<br><br>
+                
+                <strong>Fidélisation</strong> — Elle a prépayé, elle reviendra<br><br>
+                
+                <strong>Planning rempli</strong> — Vous savez qu'elle va réserver plusieurs fois
+            </div>
+        </div>
+
+        <div class="section-title">3 exemples de Packs Flash prêts à l'emploi</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du Pack</th>
+                    <th>Contenu</th>
+                    <th>Valeur réelle</th>
+                    <th>Prix pack</th>
+                    <th>Économie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pack Peau Radieuse</strong></td>
+                    <td>3 soins visage + 1 produit maison offert</td>
+                    <td>225€</td>
+                    <td>169€</td>
+                    <td>-25%</td>
+                </tr>
+                <tr>
+                    <td><strong>Pack Minceur Intensive</strong></td>
+                    <td>5 séances minceur + 1 offerte (formule 5+1)</td>
+                    <td>420€</td>
+                    <td>350€</td>
+                    <td>-17%</td>
+                </tr>
+                <tr>
+                    <td><strong>Pack Anti-Âge Signature</strong></td>
+                    <td>4 soins premium + sérum anti-âge</td>
+                    <td>340€</td>
+                    <td>259€</td>
+                    <td>-24%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="metric-box">
+            <div class="metric-label">Impact cash immédiat</div>
+            Si vous vendez seulement 10 packs à 200€ en moyenne :<br>
+            • Cash généré immédiatement : <strong>2 000€</strong><br>
+            • Ces clientes reviendront sur 2-3 mois<br>
+            • Votre planning est pré-rempli<br>
+            • Votre trésorerie est boostée instantanément
+        </div>
+
+        <div class="page-number">03 / 05</div>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Comment créer votre Pack Flash</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Structure d'un Pack Flash efficace</div>
+            <div class="framework-content">
+                <strong>1. Choisissez un thème clair</strong><br>
+                Peau radieuse, Minceur, Anti-âge, Détente, Préparation été, etc.<br><br>
+                
+                <strong>2. Combinez 3 à 5 prestations</strong><br>
+                Assez pour créer de la valeur perçue, pas trop pour rester simple.<br><br>
+                
+                <strong>3. Ajoutez un bonus tangible</strong><br>
+                Un produit offert, une séance gratuite, un upgrade premium inclus.<br><br>
+                
+                <strong>4. Réduction entre 20% et 30%</strong><br>
+                Assez pour que ce soit attractif, pas assez pour tuer votre marge.<br><br>
+                
+                <strong>5. Durée limitée : 14 jours maximum</strong><br>
+                Créez l'urgence. "Offre valable jusqu'au [date précise]"<br><br>
+                
+                <strong>6. Communication simple</strong><br>
+                Un visuel Instagram + un SMS + affichage en institut suffit.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Template communication Pack Flash</div>
+            <div class="script-text">🌸 PACK FLASH — 14 jours seulement<br><br>
+
+[Nom du Pack]<br>
+[Description en 1 ligne]<br><br>
+
+Valeur totale : [Prix normal]€<br>
+Prix exceptionnel : [Prix pack]€<br>
+Économie : -[X]%<br><br>
+
+Valable jusqu'au [date]<br>
+Places limitées : [nombre] packs disponibles<br><br>
+
+Réservez le vôtre : [téléphone] ou en institut 💕</div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Template création Pack Flash personnalisé</div>
+            <div class="framework-content">
+                <strong>Nom du Pack :</strong> ____________________<br><br>
+                
+                <strong>Thème :</strong> ____________________<br><br>
+                
+                <strong>Prestations incluses :</strong><br>
+                1. ____________________<br>
+                2. ____________________<br>
+                3. ____________________<br>
+                4. ____________________ (optionnel)<br><br>
+                
+                <strong>Bonus inclus :</strong> ____________________<br><br>
+                
+                <strong>Valeur totale normale :</strong> ____€<br><br>
+                
+                <strong>Prix du pack :</strong> ____€<br><br>
+                
+                <strong>Économie cliente :</strong> ____% (entre 20-30%)<br><br>
+                
+                <strong>Durée de validité :</strong> Du __/__/__ au __/__/__<br><br>
+                
+                <strong>Nombre de packs disponibles :</strong> ____ (créer rareté)
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Suivi et mesure Semaine 2</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Tableau de suivi Augmentation Panier</div>
+            <div class="framework-content">
+                <strong>Upgrades proposés :</strong><br>
+                • Nombre de fois proposé : ____<br>
+                • Nombre d'acceptations : ____<br>
+                • Taux d'acceptation : ____%<br>
+                • CA généré par upgrades : ____€<br><br>
+                
+                <strong>Packs Flash vendus :</strong><br>
+                • Nombre de packs vendus : ____<br>
+                • CA total packs : ____€<br>
+                • Pack moyen : ____€<br><br>
+                
+                <strong>Panier moyen :</strong><br>
+                • Panier moyen avant Semaine 2 : ____€<br>
+                • Panier moyen pendant Semaine 2 : ____€<br>
+                • Augmentation : ____€ (+____%)<br><br>
+                
+                <strong>Impact global :</strong><br>
+                • CA total semaine 2 : ____€<br>
+                • CA additionnel vs semaine type : ____€
+            </div>
+        </div>
+
+        <div class="page-number">04 / 05</div>
+    </div>
+
+    <!-- PAGE 5 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Checklist d'exécution Semaine 2</div>
+
+        <div class="checklist-box">
+            <div class="checklist-title">À faire cette semaine (dans l'ordre)</div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Définir vos 3 upgrades premium (ou utiliser les standards fournis)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Créer votre Pack Flash (thème, contenu, prix, durée)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Préparer le visuel Pack Flash (Canva suffit)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Former l'équipe (15 min) — One-Line Script + 3 upgrades</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Afficher les upgrades dans l'espace de travail (référence visuelle)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Lancer communication Pack Flash (Instagram + SMS + affichage institut)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 3-7 :</strong> Équipe propose systématiquement les upgrades (chaque soin)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 3-7 :</strong> Vendre les Packs Flash (à chaque cliente intéressée + relance SMS)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 5 :</strong> Point intermédiaire équipe — Ajuster si besoin</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Remplir tableau de suivi (upgrades acceptés, packs vendus, panier moyen)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Calculer impact total Semaine 2 et préparer Semaine 3</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Résultats attendus</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Objectifs Semaine 2</div>
+            <div class="framework-content">
+                <strong>Scénario conservateur (60 clientes/semaine) :</strong><br>
+                • Upgrades proposés : 60 fois<br>
+                • Taux acceptation : 30%<br>
+                • Upgrades vendus : 18<br>
+                • CA upgrades : 18 × 15€ = 270€<br>
+                • Packs Flash vendus : 3<br>
+                • CA packs : 3 × 180€ = 540€<br>
+                • <strong>CA additionnel total : 810€</strong><br><br>
+                
+                <strong>Scénario réaliste (60 clientes/semaine) :</strong><br>
+                • Upgrades proposés : 60 fois<br>
+                • Taux acceptation : 45%<br>
+                • Upgrades vendus : 27<br>
+                • CA upgrades : 27 × 15€ = 405€<br>
+                • Packs Flash vendus : 6<br>
+                • CA packs : 6 × 200€ = 1 200€<br>
+                • <strong>CA additionnel total : 1 605€</strong><br><br>
+                
+                <strong>Scénario optimiste (80 clientes/semaine) :</strong><br>
+                • Upgrades proposés : 80 fois<br>
+                • Taux acceptation : 50%<br>
+                • Upgrades vendus : 40<br>
+                • CA upgrades : 40 × 15€ = 600€<br>
+                • Packs Flash vendus : 10<br>
+                • CA packs : 10 × 220€ = 2 200€<br>
+                • <strong>CA additionnel total : 2 800€</strong>
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Impact cumulé Module Consolidation</div>
+            <strong>Semaine 1 (Réactivation) :</strong> +700€ à +1 500€<br>
+            <strong>Semaine 2 (Panier Moyen) :</strong> +800€ à +2 800€<br>
+            <strong>Total après 2 semaines :</strong> +1 500€ à +4 300€<br><br>
+            
+            Et ce cash est généré AVANT même de commencer la systématisation. Il finance la suite du Programme Renaissance.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Ce qui se passe ensuite</div>
+
+        <p class="first-letter">À la fin de cette Semaine 2, vous aurez transformé la manière dont votre équipe génère du chiffre d'affaires. Le One-Line Script devient un réflexe. Les upgrades font maintenant partie de votre offre standard. Et vous avez prouvé qu'augmenter le panier moyen est plus facile que d'augmenter le volume de clientes.</p>
+
+        <p>La Semaine 3 va maintenant optimiser votre planning pour éliminer les trous, augmenter sélectivement certains tarifs, et structurer votre agenda pour maximiser la rentabilité sans augmenter vos heures de travail.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Prochaine étape</div>
+            <div class="framework-content">
+                <strong>Semaine 3 : Optimisation Planning & Tarification</strong><br>
+                Objectif : Remplir les trous + Augmenter marge sans perdre clientes<br>
+                Méthode : Créneaux dernière minute + Augmentation prix sélective + Planning rentable<br>
+                Impact : +300€ à +800€/semaine en optimisant l'existant<br><br>
+                Vous recevrez le document Semaine 3 dès que vous aurez complété cette deuxième semaine.
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="divider" style="margin: 50px auto; width: 120px;"></div>
+            <div class="footer-text">Module Consolidation Financière — Programme Renaissance by Aura<br>Générez du cash avant de systématiser</div>
+        </div>
+
+        <div class="page-number">05 / 05</div>
+    </div>
+
+</body>
+</html>

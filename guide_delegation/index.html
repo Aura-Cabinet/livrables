@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuel de Délégation Efficace — Aura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #f9f7f4 0%, #fdfbf7 100%);
+            min-height: 100vh;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1a1614;
+            line-height: 1.65;
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 18rem;
+            font-weight: 300;
+            color: rgba(139, 107, 74, 0.025);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.3em;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            background: #fdfbf7;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+            padding: 80px 100px;
+            min-height: 100vh;
+            border-left: 1px solid rgba(139, 107, 74, 0.15);
+            border-right: 1px solid rgba(139, 107, 74, 0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #8b6b4a;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: #8b6b4a;
+            font-weight: 300;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #2a2420;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #4a3f38;
+            margin-bottom: 15px;
+        }
+        
+        .meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: #8b6b4a;
+            margin: 45px 0;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .first-letter::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.8;
+            margin: 8px 10px 0 0;
+            font-weight: 300;
+            color: #8b6b4a;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: #2a2420;
+        }
+        
+        em {
+            font-style: italic;
+            color: #4a3f38;
+        }
+        
+        .quote {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: #4a3f38;
+            margin: 35px 0;
+            padding-left: 30px;
+            border-left: 3px solid #8b6b4a;
+        }
+        
+        .framework-box {
+            background: rgba(139, 107, 74, 0.05);
+            border: 1px solid rgba(139, 107, 74, 0.2);
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        
+        .framework-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .framework-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .level-box {
+            background: rgba(139, 107, 74, 0.03);
+            border-left: 4px solid #8b6b4a;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+        
+        .level-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .level-name {
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: #2a2420;
+            margin-bottom: 10px;
+        }
+        
+        .checklist-box {
+            background: #fff;
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            padding: 25px 30px;
+            margin: 25px 0;
+        }
+        
+        .checklist-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: #2a2420;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #8b6b4a;
+            margin-right: 12px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .script-box {
+            background: rgba(139, 107, 74, 0.08);
+            border: 1px dashed rgba(139, 107, 74, 0.4);
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+        
+        .script-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 10px;
+            font-style: normal;
+        }
+        
+        .evaluation-grid {
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            margin: 25px 0;
+            background: #fff;
+        }
+        
+        .grid-row {
+            display: flex;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        .grid-row:last-child {
+            border-bottom: none;
+        }
+        
+        .grid-header {
+            background: rgba(139, 107, 74, 0.1);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        
+        .grid-cell {
+            padding: 15px;
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .grid-cell:not(:last-child) {
+            border-right: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 107, 74, 0.3);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.8;
+            color: #6a5d54;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            font-weight: 300;
+        }
+        
+        ul {
+            margin: 20px 0 20px 30px;
+            list-style: none;
+        }
+        
+        li {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+            text-align: justify;
+        }
+        
+        li:before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #8b6b4a;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">AURA</div>
+    
+    <!-- PAGE 1 : PROBLÈME + 5 NIVEAUX -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+            <h1>Manuel de Délégation Efficace</h1>
+            <div class="subtitle">Développer l'autonomie de votre équipe par paliers progressifs</div>
+            <div class="meta">Programme Renaissance — Document de travail</div>
+        </div>
+
+        <div class="section-title">Pourquoi vos délégations échouent</div>
+
+        <p class="first-letter">Vous avez déjà essayé de déléguer. Vous avez confié une tâche à une collaboratrice. Elle l'a mal faite. Vous avez dû reprendre. Vous avez passé plus de temps à corriger qu'à faire vous-même. Alors vous avez conclu : "C'est plus simple si je le fais moi-même."</p>
+
+        <p>Cette conclusion est votre prison. Et elle repose sur une erreur fondamentale : vous avez tenté de passer directement de "je fais tout" à "débrouille-toi toute seule". C'est comme demander à quelqu'un qui apprend le vélo de faire le Tour de France le lendemain.</p>
+
+        <div class="quote">"Déléguer sans système de progression, c'est construire sur du sable. La personne échoue, vous reprenez tout, et personne ne grandit."</div>
+
+        <p>Le problème n'est pas votre équipe. Le problème est l'absence de paliers d'autonomie. Vous devez développer la compétence progressivement, pas tout donner d'un coup. C'est exactement ce que font les 5 niveaux d'autonomie.</p>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Les 5 niveaux d'autonomie</div>
+
+        <p class="first-letter">Chaque tâche de votre institut peut être déléguée selon 5 niveaux d'autonomie progressifs. Vous commencez au niveau 1, et vous montez uniquement quand la personne maîtrise son niveau actuel. Ne sautez jamais d'étape.</p>
+
+        <div class="level-box">
+            <div class="level-number">Niveau 1</div>
+            <div class="level-name">Exécution supervisée — "Fais exactement ça"</div>
+            <p><strong>Ce que la personne fait :</strong> Elle suit un protocole précis, étape par étape. Elle ne prend aucune décision seule. Elle vous consulte si quelque chose sort du cadre.</p>
+            <p><strong>Votre rôle :</strong> Vous êtes présente, vous vérifiez en temps réel, vous corrigez immédiatement.</p>
+            <p><strong>Exemple institut :</strong> Nouvelle apprentice qui apprend à préparer une cabine. Elle suit la checklist, vous vérifiez chaque étape avec elle.</p>
+            <p><strong>Durée typique :</strong> 2-4 semaines selon complexité de la tâche.</p>
+        </div>
+
+        <div class="level-box">
+            <div class="level-number">Niveau 2</div>
+            <div class="level-name">Exécution avec rapport — "Fais, puis dis-moi"</div>
+            <p><strong>Ce que la personne fait :</strong> Elle exécute la tâche seule en suivant le protocole. Après exécution, elle vous informe du résultat et signale toute anomalie.</p>
+            <p><strong>Votre rôle :</strong> Vous vérifiez le résultat final (pas le processus). Vous corrigez si nécessaire, mais après coup.</p>
+            <p><strong>Exemple institut :</strong> Elle prépare les cabines seule le matin, puis vous fait un tour rapide ensemble pour vérifier. Elle vous dit "Cabine 2 OK mais il manque des serviettes chaudes, j'ai complété".</p>
+            <p><strong>Durée typique :</strong> 1-2 mois.</p>
+        </div>
+
+        <div class="level-box">
+            <div class="level-number">Niveau 3</div>
+            <div class="level-name">Exécution avec alerte — "Fais, alerte-moi si problème"</div>
+            <p><strong>Ce que la personne fait :</strong> Elle exécute la tâche de manière autonome. Elle ne vous informe que s'il y a un problème ou une exception qu'elle ne sait pas gérer.</p>
+            <p><strong>Votre rôle :</strong> Vous n'intervenez que si elle vous sollicite. Vous faites des contrôles aléatoires ponctuels.</p>
+            <p><strong>Exemple institut :</strong> Elle gère l'accueil et la prise de rendez-vous seule. Elle ne vous appelle que si une cliente demande quelque chose d'inhabituel ou si le logiciel bug.</p>
+            <p><strong>Durée typique :</strong> 2-4 mois.</p>
+        </div>
+
+        <div class="level-box">
+            <div class="level-number">Niveau 4</div>
+            <div class="level-name">Décision dans un cadre — "Fais et décide dans ces limites"</div>
+            <p><strong>Ce que la personne fait :</strong> Elle prend des décisions dans un cadre défini par vous. Elle adapte le protocole selon le contexte, sans vous consulter systématiquement.</p>
+            <p><strong>Votre rôle :</strong> Vous définissez les limites (budget, périmètre, exceptions). À l'intérieur de ces limites, elle est autonome.</p>
+            <p><strong>Exemple institut :</strong> Elle gère les réclamations clientes seules, avec pouvoir de faire un geste commercial jusqu'à 50€. Au-delà, elle vous consulte.</p>
+            <p><strong>Durée typique :</strong> 3-6 mois.</p>
+        </div>
+
+        <div class="level-box">
+            <div class="level-number">Niveau 5</div>
+            <div class="level-name">Autonomie complète — "Fais, améliore, et forme les autres"</div>
+            <p><strong>Ce que la personne fait :</strong> Elle maîtrise complètement la tâche. Elle l'optimise, propose des améliorations, et peut former d'autres collaboratrices.</p>
+            <p><strong>Votre rôle :</strong> Vous ne vous en occupez plus. Elle devient référente sur ce domaine.</p>
+            <p><strong>Exemple institut :</strong> Elle gère entièrement les stocks : commandes, réception, rangement, inventaire. Elle a même optimisé le système de rotation et formé la nouvelle.</p>
+            <p><strong>Durée typique :</strong> 6-12 mois minimum depuis le niveau 1.</p>
+        </div>
+
+        <div class="page-number">01 / 04</div>
+    </div>
+
+    <!-- PAGE 2 : CHECKLISTS DÉLÉGATION -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Comment identifier le niveau actuel</div>
+
+        <p class="first-letter">Avant de déléguer, vous devez savoir où en est votre collaboratrice. Ne supposez pas. Évaluez objectivement selon ces critères.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Questions d'évaluation</div>
+            <div class="framework-content">
+                <strong>Elle est au Niveau 1 si :</strong> C'est nouveau pour elle, elle ne sait pas du tout faire, elle a besoin qu'on lui montre<br><br>
+                <strong>Elle est au Niveau 2 si :</strong> Elle sait faire si elle suit le protocole, mais elle n'est pas sûre d'elle, elle a besoin de validation<br><br>
+                <strong>Elle est au Niveau 3 si :</strong> Elle sait faire seule, elle gère les situations courantes sans vous, mais elle bloque sur les exceptions<br><br>
+                <strong>Elle est au Niveau 4 si :</strong> Elle gère les exceptions intelligemment, elle prend de bonnes décisions dans son périmètre<br><br>
+                <strong>Elle est au Niveau 5 si :</strong> Elle maîtrise parfaitement, elle améliore le système, elle pourrait former quelqu'un d'autre
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Checklists de délégation par type</div>
+
+        <p class="first-letter">Utilisez ces checklists selon ce que vous déléguez. Ne sautez aucune étape, même si ça vous semble évident. C'est précisément ce qui est "évident pour vous" qui est oublié.</p>
+
+        <div class="checklist-box">
+            <div class="checklist-title">Checklist 1 : Délégation tâche ponctuelle</div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Clarifier l'objectif final</strong> — "À la fin, il faut que X soit fait pour que Y puisse avoir lieu"</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Expliquer le pourquoi</strong> — "C'est important parce que..." (impact si bien fait / mal fait)</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Donner le protocole</strong> — Étapes précises, dans l'ordre. Si SOP existe, la donner.</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Montrer les outils</strong> — Où sont les choses ? Comment on accède ? Quels supports ?</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Définir l'échéance</strong> — Deadline claire + moment de vérification intermédiaire si tâche longue</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Faire reformuler</strong> — "Explique-moi ce que tu vas faire" (vérifier compréhension)</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Identifier les pièges</strong> — "Attention à X, ça arrive souvent que..."</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Donner permission de poser questions</strong> — "Si tu bloques, viens me voir immédiatement"</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Vérifier le résultat</strong> — À l'échéance, contrôler qualité + donner feedback</div>
+            </div>
+        </div>
+
+        <div class="checklist-box">
+            <div class="checklist-title">Checklist 2 : Délégation tâche récurrente</div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Vérifier que la SOP existe et est claire</strong> — Si pas de SOP, en créer une avant de déléguer</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Expliquer la finalité globale</strong> — Pourquoi cette tâche existe dans l'organisation</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Montrer une fois en entier</strong> — Faire la tâche avec elle, elle observe et pose questions</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>La faire faire avec vous</strong> — Elle fait, vous guidez en temps réel, vous corrigez</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>La laisser faire seule avec rapport</strong> — Elle fait, puis vous vérifie ensemble (Niveau 2)</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Définir la fréquence de contrôle</strong> — Combien de fois vous vérifiez avant de lâcher complètement ?</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Identifier les situations d'alerte</strong> — Dans quels cas elle doit vous prévenir immédiatement</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Programmer un point hebdo 1 mois</strong> — "Comment ça se passe ? Qu'est-ce qui bloque ?"</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Évaluer progression niveau</strong> — Après 1 mois, décider si on monte au niveau suivant</div>
+            </div>
+        </div>
+
+        <div class="checklist-box">
+            <div class="checklist-title">Checklist 3 : Délégation responsabilité complète</div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Vérifier qu'elle maîtrise niveau 3 minimum</strong> — Ne pas donner responsabilité trop tôt</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Définir le périmètre précis</strong> — De quoi elle est responsable exactement ? Jusqu'où ?</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Établir les limites décisionnelles</strong> — Budget ? Autonomie ? Exceptions où elle doit vous consulter ?</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Définir les métriques de succès</strong> — Comment on mesure si elle fait bien ? Quels indicateurs ?</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Annoncer officiellement à l'équipe</strong> — "À partir de maintenant, X est responsable de Y"</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Programmer revue mensuelle</strong> — Point régulier sur résultats, difficultés, besoins</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Résister à la tentation de reprendre</strong> — Laisser respirer, n'intervenir qu'en cas de vrai problème</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Valoriser publiquement les succès</strong> — Reconnaissance visible devant l'équipe</div>
+            </div>
+        </div>
+
+        <div class="page-number">02 / 04</div>
+    </div>
+
+    <!-- PAGE 3 : SCRIPTS -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Scripts de transmission</div>
+
+        <p class="first-letter">Ce que vous dites et comment vous le dites détermine si la délégation réussit. Utilisez ces scripts comme base, adaptez-les à votre ton, mais gardez la structure.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Script délégation niveau 1 (première fois)</div>
+            <div class="framework-content">
+                <div class="script-box">
+                    <div class="script-label">Exemple : Déléguer la préparation des cabines</div>
+                    "Je vais te montrer comment préparer les cabines le matin. C'est super important parce que c'est la première impression que la cliente a en entrant. Si la cabine est parfaite, elle est déjà détendue avant même qu'on commence le soin.<br><br>
+                    
+                    On va le faire ensemble aujourd'hui, je te montre chaque étape. Ensuite tu le feras avec moi pendant une semaine, et après tu seras autonome. N'hésite pas à me poser toutes tes questions, même si ça te semble bête. Tout le monde apprend.<br><br>
+                    
+                    Voici la checklist que tu vas suivre [donner checklist]. On va la faire ensemble étape par étape. Première étape : aérer 5 minutes. Pourquoi 5 minutes ? Parce que moins, l'odeur des produits reste, et plus, la pièce refroidit trop. Allez, on y va."
+                </div>
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Script passage niveau 2 → 3</div>
+            <div class="framework-content">
+                <div class="script-box">
+                    <div class="script-label">Quand elle maîtrise et que vous voulez lâcher</div>
+                    "Tu gères super bien la préparation des cabines maintenant. Je te fais confiance à 100%. À partir de demain, tu le fais seule, je ne vérifie plus systématiquement.<br><br>
+                    
+                    Par contre, si tu remarques quelque chose d'anormal — produit qui manque, appareil qui bug, ou quoi que ce soit qui sort de l'ordinaire — tu me préviens immédiatement. Mais pour le quotidien standard, c'est toi qui gères.<br><br>
+                    
+                    Je vais quand même passer de temps en temps pour m'assurer que tout roule, mais ce n'est plus pour te contrôler, c'est juste pour être sûre que tu n'as besoin de rien. OK ?"
+                </div>
+            </div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Script délégation avec décision (niveau 4)</div>
+            <div class="framework-content">
+                <div class="script-

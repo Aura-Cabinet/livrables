@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Consolidation — Semaine 1 — Aura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #f9f7f4 0%, #fdfbf7 100%);
+            min-height: 100vh;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1a1614;
+            line-height: 1.65;
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 18rem;
+            font-weight: 300;
+            color: rgba(139, 107, 74, 0.025);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.3em;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto 60px;
+            background: #fdfbf7;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.1);
+            padding: 80px 100px;
+            min-height: 100vh;
+            border-left: 1px solid rgba(139, 107, 74, 0.15);
+            border-right: 1px solid rgba(139, 107, 74, 0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #8b6b4a;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: #8b6b4a;
+            font-weight: 300;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #2a2420;
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #4a3f38;
+            margin-bottom: 15px;
+        }
+        
+        .meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: #8b6b4a;
+            margin: 45px 0;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        
+        .first-letter::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.8;
+            margin: 8px 10px 0 0;
+            font-weight: 300;
+            color: #8b6b4a;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: #2a2420;
+        }
+        
+        em {
+            font-style: italic;
+            color: #4a3f38;
+        }
+        
+        .framework-box {
+            background: rgba(139, 107, 74, 0.05);
+            border: 1px solid rgba(139, 107, 74, 0.2);
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        
+        .framework-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .framework-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .action-box {
+            background: #2a2420;
+            color: #fdfbf7;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 4px solid #8b6b4a;
+        }
+        
+        .action-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: #d4b896;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .action-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fdfbf7;
+            margin-bottom: 15px;
+        }
+        
+        .action-content {
+            font-size: 1.05rem;
+            color: #e8e0d5;
+            line-height: 1.7;
+        }
+        
+        .script-box {
+            background: #fff;
+            border: 2px solid rgba(139, 107, 74, 0.3);
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .script-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .script-text {
+            font-size: 1rem;
+            color: #2a2420;
+            line-height: 1.8;
+            font-family: 'Courier New', monospace;
+            background: rgba(139, 107, 74, 0.05);
+            padding: 15px;
+        }
+        
+        .metric-box {
+            background: rgba(139, 107, 74, 0.08);
+            border-left: 3px solid #8b6b4a;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+        
+        .metric-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #8b6b4a;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        
+        .checklist-box {
+            background: #fff;
+            border: 1px solid rgba(139, 107, 74, 0.3);
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .checklist-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: #2a2420;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #8b6b4a;
+            margin-right: 12px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(139, 107, 74, 0.3);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.8;
+            color: #6a5d54;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #8b6b4a;
+            font-weight: 300;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(139, 107, 74, 0.2);
+        }
+        
+        th {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #8b6b4a;
+            font-weight: 500;
+            background: rgba(139, 107, 74, 0.05);
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">AURA</div>
+    
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+            <h1>Module Consolidation Financière<br>Semaine 1 : Réactivation Clientèle</h1>
+            <div class="subtitle">Générez du cash immédiat avec votre base existante</div>
+            <div class="meta">Programme Renaissance — Document d'exécution</div>
+        </div>
+
+        <div class="section-title">Objectif de la semaine 1</div>
+
+        <p class="first-letter">Générer entre 1 500€ et 4 000€ de chiffre d'affaires additionnel en réactivant votre clientèle dormante et en stimulant vos clientes fréquentes. Sans effort de votre part. Sans nouvelle prestation à inventer. Sans surcharge de travail.</p>
+
+        <p>Cette première semaine du Module Consolidation exploite le levier le plus rapide de tous : votre base clients existante. La plupart des instituts ont entre 40% et 70% de clientes dormantes — des personnes qui sont déjà venues, qui connaissent votre qualité, mais qui n'ont pas réservé depuis des mois.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Pourquoi cette approche fonctionne</div>
+            <div class="framework-content">
+                <strong>Zéro acquisition</strong> — Vous ne cherchez pas de nouvelles clientes, vous réactivez celles qui existent déjà<br><br>
+                <strong>Confiance établie</strong> — Elles connaissent votre institut, le risque perçu est nul<br><br>
+                <strong>Exécution rapide</strong> — Tout peut être lancé en 24h maximum<br><br>
+                <strong>Délégation totale</strong> — Votre équipe gère les réponses, vous ne faites rien<br><br>
+                <strong>Taux de conversion élevé</strong> — Entre 5% et 15% de taux de réactivation selon votre base
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Les 3 actions de la semaine</div>
+
+        <div class="action-box">
+            <div class="action-number">Action 1</div>
+            <div class="action-title">Segmenter votre base clients en 3 groupes</div>
+            <div class="action-content">
+                Vous devez identifier trois catégories de clientes dans votre logiciel de gestion. Pas besoin d'outil complexe, votre logiciel actuel suffit largement.<br><br>
+                
+                <strong>Groupe 1 : Clientes Dormantes</strong><br>
+                Pas venues depuis 6 mois ou plus. Ce sont elles qui représentent le plus gros potentiel de réactivation immédiate.<br><br>
+                
+                <strong>Groupe 2 : Clientes Fréquentes</strong><br>
+                Venues dans les 3 derniers mois. Elles sont déjà engagées, l'objectif est de les faire revenir plus vite.<br><br>
+                
+                <strong>Groupe 3 : Clientes Chaudes</strong><br>
+                Venues la semaine dernière. Moment idéal pour proposer un complément ou un upgrade lors de leur prochaine visite.
+            </div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Répartition typique</div>
+            Sur 200 clientes totales :<br>
+            • Dormantes : 100-140 clientes (50-70%)<br>
+            • Fréquentes : 40-80 clientes (20-40%)<br>
+            • Chaudes : 10-20 clientes (5-10%)
+        </div>
+
+        <p><strong>Comment extraire ces données :</strong> Dans votre logiciel de rendez-vous, filtrez par "dernière visite". Exportez en Excel si nécessaire. Vous n'avez besoin que du prénom et du numéro de téléphone.</p>
+
+        <div class="page-number">01 / 04</div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="action-box">
+            <div class="action-number">Action 2</div>
+            <div class="action-title">Lancer les campagnes SMS en 2 vagues</div>
+            <div class="action-content">
+                Vous allez envoyer deux messages différents selon le segment. Ces messages sont prêts à l'emploi. Copiez-les exactement tels quels, ils sont optimisés pour maximiser le taux de réponse.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Message 1 : Clientes Dormantes</div>
+            <div class="script-text">Bonjour [Prénom] 🌸<br>
+Nous vous avons réservé une offre spéciale fidélité valable 7 jours :<br>
+-20% sur votre soin préféré, sans minimum.<br>
+Voulez-vous en profiter ? Répondez OUI 💕</div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Performance attendue</div>
+            Taux de réponse : 3% à 10%<br>
+            Taux de conversion finale : 2% à 7%<br>
+            Sur 100 dormantes envoyées → 2 à 7 rendez-vous réservés
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Message 2 : Clientes Fréquentes</div>
+            <div class="script-text">Coucou [Prénom] 🌺<br>
+Petit cadeau fidélité cette semaine : upgrade premium offert sur votre prochain soin.<br>
+Intéressée ?</div>
+        </div>
+
+        <div class="metric-box">
+            <div class="metric-label">Performance attendue</div>
+            Taux de réponse : 5% à 12%<br>
+            Taux de conversion finale : 4% à 10%<br>
+            Sur 50 fréquentes envoyées → 2 à 5 rendez-vous réservés
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Timing d'envoi optimal</div>
+            <div class="framework-content">
+                <strong>Meilleur jour :</strong> Mardi ou mercredi<br>
+                <strong>Meilleure heure :</strong> 10h-11h ou 14h-15h<br>
+                <strong>À éviter :</strong> Lundi matin, vendredi après 16h, weekend<br><br>
+                
+                <strong>Vague 1 :</strong> Dormantes (mardi 10h)<br>
+                <strong>Vague 2 :</strong> Fréquentes (mercredi 14h)<br><br>
+                
+                Espacez de 24h minimum pour ne pas saturer votre agenda de réponses simultanées.
+            </div>
+        </div>
+
+        <div class="section-title">Outils d'envoi</div>
+
+        <p>Vous avez trois options pour envoyer ces messages :</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Options d'envoi</div>
+            <div class="framework-content">
+                <strong>Option 1 : WhatsApp Business (gratuit)</strong><br>
+                Créez des listes de diffusion. Envoyez manuellement mais rapidement. Taux de lecture élevé.<br><br>
+                
+                <strong>Option 2 : SMS via votre logiciel</strong><br>
+                La plupart des logiciels d'institut ont une fonction SMS. Coût : 0,05€ à 0,10€ par SMS.<br><br>
+                
+                <strong>Option 3 : Service SMS en ligne</strong><br>
+                Solutions comme Brevo, Sendinblue, ou Twilio. Pour grandes bases (200+ clientes).
+            </div>
+        </div>
+
+        <p><strong>Notre recommandation :</strong> Commencez avec WhatsApp Business si votre base fait moins de 100 clientes par segment. C'est gratuit, rapide, et le taux de lecture est excellent.</p>
+
+        <div class="page-number">02 / 04</div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="action-box">
+            <div class="action-number">Action 3</div>
+            <div class="action-title">Installer le script de réponse pour votre équipe</div>
+            <div class="action-content">
+                Quand une cliente répond "OUI" ou montre son intérêt, votre équipe doit savoir exactement quoi dire. Le script ci-dessous est à afficher dans votre espace de travail, accessible à toutes vos collaboratrices.
+            </div>
+        </div>
+
+        <div class="script-box">
+            <div class="script-label">Script de réponse standard</div>
+            <div class="script-text">Super [Prénom] !<br>
+Je peux vous proposer demain 14h ou jeudi 10h 💕<br>
+Quel créneau vous arrange ?</div>
+        </div>
+
+        <div class="framework-box">
+            <div class="framework-title">Règles d'or du script de réponse</div>
+            <div class="framework-content">
+                <strong>1. Répondre dans les 2h maximum</strong> — Plus vous répondez vite, plus le taux de conversion est élevé<br><br>
+                
+                <strong>2. Proposer 2 créneaux précis</strong> — Jamais "Quand voulez-vous venir ?" mais "Demain 14h ou jeudi 10h ?"<br><br>
+                
+                <strong>3. Ne pas expliquer l'offre</strong> — Elle est déjà claire dans le SMS. Évitez les longues explications.<br><br>
+                
+                <strong>4. Confirmer immédiatement</strong> — Dès qu'elle choisit un créneau : "Parfait ! Rendez-vous confirmé pour [jour] à [heure]. À très vite 💕"<br><br>
+                
+                <strong>5. Bloquer le RDV instantanément</strong> — Ne pas attendre. Rentrer dans le système immédiatement.
+            </div>
+        </div>
+
+        <div class="section-title">Gestion des objections courantes</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Objection cliente</th>
+                    <th>Réponse recommandée</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>"C'est quoi exactement l'offre ?"</td>
+                    <td>"C'est une remise fidélité de 20% sur votre soin préféré, valable 7 jours 💕 Je vous propose jeudi 10h ?"</td>
+                </tr>
+                <tr>
+                    <td>"Je n'ai pas le temps cette semaine"</td>
+                    <td>"Pas de souci ! Je peux vous bloquer la semaine prochaine ? Lundi 15h ou mercredi 11h ?"</td>
+                </tr>
+                <tr>
+                    <td>"Je rappellerai pour réserver"</td>
+                    <td>"D'accord 💕 Pour être sûre de ne pas perdre votre offre, je vous bloque un créneau ? Vous pourrez toujours décaler si besoin."</td>
+                </tr>
+                <tr>
+                    <td>"C'est valable sur tous les soins ?"</td>
+                    <td>"Oui sur tous vos soins habituels 💕 Vous préférez lequel ? Je vous trouve un créneau."</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="metric-box">
+            <div class="metric-label">Important</div>
+            Votre équipe ne doit JAMAIS dire "Je ne sais pas" ou "Je vais demander à la gérante". Elles ont toutes les réponses dans ce document. Formez-les 10 minutes avant le lancement.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Suivi et mesure des résultats</div>
+
+        <p class="first-letter">Vous devez suivre précisément les résultats de cette campagne pour mesurer l'impact réel sur votre trésorerie. Utilisez ce tableau simple.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Tableau de suivi Semaine 1</div>
+            <div class="framework-content">
+                <strong>Messages envoyés :</strong><br>
+                • Dormantes : ____ clientes<br>
+                • Fréquentes : ____ clientes<br>
+                • Total envoyé : ____ messages<br><br>
+                
+                <strong>Réponses reçues :</strong><br>
+                • Nombre de "OUI" : ____<br>
+                • Taux de réponse : ____% <br><br>
+                
+                <strong>Rendez-vous confirmés :</strong><br>
+                • Nombre total : ____<br>
+                • Taux de conversion : ____% <br><br>
+                
+                <strong>Chiffre d'affaires généré :</strong><br>
+                • CA total semaine 1 : ____ €<br>
+                • Panier moyen : ____ €
+            </div>
+        </div>
+
+        <div class="page-number">03 / 04</div>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">AURA</div>
+        </div>
+
+        <div class="section-title">Checklist d'exécution Semaine 1</div>
+
+        <div class="checklist-box">
+            <div class="checklist-title">À faire cette semaine (dans l'ordre)</div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Extraire la base clients de votre logiciel (prénom + téléphone)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Segmenter en 3 groupes (Dormantes / Fréquentes / Chaudes)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 1 :</strong> Préparer les listes d'envoi (WhatsApp ou SMS)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Former l'équipe (10 min) : leur montrer le script de réponse</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 :</strong> Afficher le script de réponse dans l'espace de travail</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2 (Mardi 10h) :</strong> Envoyer Message 1 aux Dormantes</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 2-3 :</strong> Équipe répond aux messages (max 2h de délai)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 3 (Mercredi 14h) :</strong> Envoyer Message 2 aux Fréquentes</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 3-4 :</strong> Équipe répond aux messages</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 5 :</strong> Relance douce pour celles qui ont répondu "intéressée" mais pas réservé</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Remplir le tableau de suivi (messages envoyés, réponses, RDV, CA)</div>
+            </div>
+            
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div><strong>Jour 7 :</strong> Analyser les résultats et préparer Semaine 2 (Augmentation Panier)</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Résultats attendus</div>
+
+        <div class="framework-box">
+            <div class="framework-title">Objectifs Semaine 1</div>
+            <div class="framework-content">
+                <strong>Scénario conservateur (base 150 clientes) :</strong><br>
+                • Messages envoyés : 100<br>
+                • Taux de réponse : 5%<br>
+                • Rendez-vous confirmés : 5<br>
+                • Panier moyen : 65€<br>
+                • <strong>CA généré : 325€</strong><br><br>
+                
+                <strong>Scénario réaliste (base 200 clientes) :</strong><br>
+                • Messages envoyés : 140<br>
+                • Taux de réponse : 7%<br>
+                • Rendez-vous confirmés : 10<br>
+                • Panier moyen : 70€<br>
+                • <strong>CA généré : 700€</strong><br><br>
+                
+                <strong>Scénario optimiste (base 300+ clientes) :</strong><br>
+                • Messages envoyés : 200<br>
+                • Taux de réponse : 10%<br>
+                • Rendez-vous confirmés : 20<br>
+                • Panier moyen : 75€<br>
+                • <strong>CA généré : 1 500€</strong>
+            </div>
+        </div>
+
+        <p><strong>Important :</strong> Ces chiffres sont du chiffre d'affaires additionnel, généré avec zéro effort de votre part. Votre équipe gère les réponses. Vous ne faites rien d'autre que de valider le lancement.</p>
+
+        <div class="metric-box">
+            <div class="metric-label">Note de contexte</div>
+            Si vos résultats sont en dessous du scénario conservateur, cela signale généralement :<br>
+            • Base clients trop petite (moins de 100 clientes totales)<br>
+            • Messages envoyés à un mauvais moment (weekend, lundi matin)<br>
+            • Équipe qui répond trop lentement (délai >4h)<br>
+            • Offre pas assez claire ou attractive<br><br>
+            Dans ce cas, ajustez et relancez une seconde vague 10 jours plus tard avec un message différent.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Ce qui se passe ensuite</div>
+
+        <p class="first-letter">À la fin de cette première semaine, vous aurez créé un flux de trésorerie supplémentaire, généré rapidement et sans friction. Ce cash ne reste pas un concept : il vient financer immédiatement la suite du programme et sécuriser vos prochaines décisions.
+
+Il vous donne trois leviers concrets :
+→ libérer du temps pour travailler sur le stratégique, pas dans l’urgence,
+→ déléguer si nécessaire, en finançant ponctuellement une ressource extérieure,
+→ ou tout simplement retrouver une marge financière et mentale.
+
+</p>
+
+        <p>Et plus important que le chiffre lui-même : vous aurez constaté, par l’action, que le Programme Renaissance produit des résultats tangibles. Pas en théorie. Pas plus tard. En 7 jours.
+
+Cette dynamique vous prépare naturellement à l’étape suivante : la Semaine 2, dédiée à l’augmentation du panier moyen.</p>
+
+        <div class="framework-box">
+            <div class="framework-title">Prochaine étape</div>
+            <div class="framework-content">
+                <strong>Semaine 2 : Augmentation Panier Moyen</strong><br>
+                Objectif : +10% à +25% de panier par cliente<br>
+                Méthode : One-line upsell script + Upgrades premium + Pack flash<br>
+                Impact : Sur chaque rendez-vous déjà programmé, pas seulement les nouvelles<br><br>
+                Vous recevrez le document Semaine 2 dès que vous aurez complété cette première semaine.
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="divider" style="margin: 50px auto; width: 120px;"></div>
+            <div class="footer-text">Module Consolidation Financière — Programme Renaissance by Aura<br>Générez du cash avant de systématiser</div>
+        </div>
+
+        <div class="page-number">04 / 04</div>
+    </div>
+
+</body>
+</html>

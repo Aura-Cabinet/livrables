@@ -1,9 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/guide_delegation", "destination": "/guide_delegation/index.html" },
-    { "source": "/kit_sop", "destination": "/kit_sop/index.html" },
-    { "source": "/module_cs1", "destination": "/module_cs1/index.html" },
-    { "source": "/module_cs2", "destination": "/module_cs2/index.html" },
-    { "source": "/module_cs3", "destination": "/module_cs3/index.html" }
-  ]
-}
